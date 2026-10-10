@@ -1,0 +1,37 @@
+# App names are global on Fly: change this if "taal-teacher" is taken.
+app = "taal-teacher"
+primary_region = "fra"
+
+[env]
+  PORT = "8080"
+  TEACHER_DB = "/data/teacher.db"
+  TEACHER_MODEL = "claude-sonnet-5-5"
+  # Free allowance, in tokens per UTC day. Lessons someone already asked for are served free from the cache.
+  TEACHER_DAILY_PER_CLIENT = "60000"
+  TEACHER_DAILY_PER_IP = "150000"
+  TEACHER_DAILY_GLOBAL = "1500000"
+  TEACHER_REQUESTS_PER_MINUTE = "20"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "30s"
+    method = "GET"
+    path = "/healthz"
+    timeout = "5s"
+
+# Quota counts and cached lessons live in SQLite on this volume. One machine only: a volume belongs to one machine.
+[[mounts]]
+  source = "teacher_data"
+  destination = "/data"
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1

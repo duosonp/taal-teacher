@@ -1,0 +1,2014 @@
+{
+ "version": 1,
+ "updated": "2026-10-10",
+ "languages": {
+  "ro": "Romanian",
+  "hu": "Hungarian",
+  "fi": "Finnish",
+  "sv": "Swedish",
+  "gd": "Scottish Gaelic"
+ },
+ "lessons": [
+  {
+   "id": "demonstratives-compare",
+   "feature": "Demonstratives",
+   "langs": [
+    "ro",
+    "hu",
+    "fi",
+    "sv",
+    "gd"
+   ],
+   "level": "intermediate",
+   "added": "2026-10-10",
+   "title": "Demonstratives compared: Romanian, Hungarian, Finnish, Swedish, Gaelic",
+   "summary": "All five languages point with 'this' and 'that', but they differ in how many distances they distinguish, where the demonstrative goes, whether the noun needs an article, and what the demonstrative agrees with.",
+   "matrix": {
+    "title": "At a glance",
+    "cols": [
+     "Romanian",
+     "Hungarian",
+     "Finnish",
+     "Swedish",
+     "Scottish Gaelic"
+    ],
+    "rows": [
+     {
+      "label": "degrees of distance",
+      "cells": [
+       "2: acest / acel",
+       "2: ez / az",
+       "3: tämä / tuo / se",
+       "2: den här / den där",
+       "3: seo / sin / siud"
+      ]
+     },
+     {
+      "label": "position",
+      "cells": [
+       "before the noun, or after a definite noun",
+       "before the noun",
+       "before the noun",
+       "before the noun",
+       "after the noun"
+      ]
+     },
+     {
+      "label": "article with the noun",
+      "cells": [
+       "only when placed after: copilul acesta",
+       "always: ez a ház",
+       "no articles",
+       "den här + definite noun; denna + bare noun",
+       "always: an taigh seo"
+      ]
+     },
+     {
+      "label": "agrees in case",
+      "cells": [
+       "yes: nom-acc / gen-dat",
+       "yes, every case: ebben a házban",
+       "yes, every case: tässä talossa",
+       "no cases",
+       "no, invariable"
+      ]
+     },
+     {
+      "label": "agrees in gender / number",
+      "cells": [
+       "gender and number",
+       "number",
+       "number",
+       "gender (den/det) and number (de)",
+       "no"
+      ]
+     }
+    ]
+   },
+   "sections": [
+    {
+     "lang": "ro",
+     "name": "Romanian",
+     "overview": "Two degrees, declined for gender, number and case, before a bare noun or after a definite one.",
+     "examples": [
+      {
+       "words": [
+        {
+         "w": "Copilul",
+         "g": "child-DEF"
+        },
+        {
+         "w": "acesta",
+         "g": "this.M.SG"
+        },
+        {
+         "w": "citește.",
+         "g": "read.3SG.PRS"
+        }
+       ],
+       "translation": "This child is reading.",
+       "note": "After the noun: the noun takes the definite article and the demonstrative ends in -a. Common in speech."
+      }
+     ]
+    },
+    {
+     "lang": "hu",
+     "name": "Hungarian",
+     "overview": "Two degrees, always with the article, copying the noun's case.",
+     "examples": [
+      {
+       "words": [
+        {
+         "w": "Ebben",
+         "g": "this.INE"
+        },
+        {
+         "w": "a",
+         "g": "the"
+        },
+        {
+         "w": "házban",
+         "g": "house.INE"
+        },
+        {
+         "w": "lakom.",
+         "g": "live.1SG"
+        }
+       ],
+       "translation": "I live in this house.",
+       "note": "-ban appears twice: on ez (ebben) and on the noun."
+      }
+     ]
+    },
+    {
+     "lang": "fi",
+     "name": "Finnish",
+     "overview": "Three degrees, no article, copying the noun's case.",
+     "examples": [
+      {
+       "words": [
+        {
+         "w": "Asun",
+         "g": "live.1SG"
+        },
+        {
+         "w": "tässä",
+         "g": "this.INE"
+        },
+        {
+         "w": "talossa.",
+         "g": "house.INE"
+        }
+       ],
+       "translation": "I live in this house.",
+       "note": "Same case on both words: tässä talossa."
+      }
+     ]
+    },
+    {
+     "lang": "sv",
+     "name": "Swedish",
+     "overview": "Two degrees built from den/det/de + här/där, with a definite noun.",
+     "examples": [
+      {
+       "words": [
+        {
+         "w": "Den här",
+         "g": "this.COM"
+        },
+        {
+         "w": "bilen",
+         "g": "car-DEF"
+        },
+        {
+         "w": "är",
+         "g": "be.PRS"
+        },
+        {
+         "w": "ny.",
+         "g": "new"
+        }
+       ],
+       "translation": "This car is new."
+      }
+     ]
+    },
+    {
+     "lang": "gd",
+     "name": "Scottish Gaelic",
+     "overview": "Three invariable degrees after an article + noun.",
+     "examples": [
+      {
+       "words": [
+        {
+         "w": "Tha",
+         "g": "be.PRS"
+        },
+        {
+         "w": "an",
+         "g": "the"
+        },
+        {
+         "w": "taigh",
+         "g": "house"
+        },
+        {
+         "w": "seo",
+         "g": "this"
+        },
+        {
+         "w": "mòr.",
+         "g": "big"
+        }
+       ],
+       "translation": "This house is big."
+      }
+     ]
+    }
+   ],
+   "contrasts": [
+    {
+     "point": "Three-way systems",
+     "detail": "Finnish and Gaelic distinguish near me, near you or known, and far away; Romanian, Hungarian and Swedish manage with two."
+    },
+    {
+     "point": "Double marking",
+     "detail": "Hungarian and Finnish put the case ending on both the demonstrative and the noun; Swedish and Romanian (postposed) mark definiteness twice instead: den här bilen, copilul acesta."
+    },
+    {
+     "point": "Word order",
+     "detail": "Only Gaelic places the demonstrative after the noun as the rule; Romanian allows both orders, with a change of form."
+    }
+   ],
+   "mnemonic": "Count the distances, then ask: article? case? which side of the noun?",
+   "related": [
+    {
+     "id": "ro-demonstratives",
+     "feature": "Romanian demonstratives",
+     "why": "Full tables, including gen-dat and colloquial forms."
+    },
+    {
+     "id": "hu-demonstratives",
+     "feature": "Hungarian demonstratives",
+     "why": "All the case forms of ez and az."
+    },
+    {
+     "id": "fi-demonstratives",
+     "feature": "Finnish demonstratives",
+     "why": "tämä, tuo and se through the cases."
+    },
+    {
+     "id": "sv-demonstratives",
+     "feature": "Swedish demonstratives",
+     "why": "den här versus denna."
+    },
+    {
+     "id": "gd-demonstratives",
+     "feature": "Scottish Gaelic demonstratives",
+     "why": "seo, sin, siud and ud."
+    },
+    {
+     "id": "suffixed-article-ro-sv",
+     "feature": "The suffixed definite article",
+     "why": "Romanian and Swedish definite articles both began as demonstratives."
+    }
+   ],
+   "drill": [
+    {
+     "q": "Which language has three degrees of distance and puts the demonstrative after the noun?",
+     "lang": "gd",
+     "options": [
+      "Finnish",
+      "Scottish Gaelic",
+      "Hungarian",
+      "Swedish"
+     ],
+     "answer": "Scottish Gaelic",
+     "explain": "an taigh seo / sin / ud."
+    },
+    {
+     "q": "'In this house' in Hungarian:",
+     "lang": "hu",
+     "options": [
+      "ez a házban",
+      "ebben a házban",
+      "ebben házban"
+     ],
+     "answer": "ebben a házban",
+     "explain": "Article plus the case ending on both words."
+    },
+    {
+     "q": "'In this house' in Finnish:",
+     "lang": "fi",
+     "options": [
+      "tämä talossa",
+      "tässä talossa",
+      "tässä talo"
+     ],
+     "answer": "tässä talossa",
+     "explain": "No article; both words in the inessive."
+    },
+    {
+     "q": "'This car' in spoken Swedish:",
+     "lang": "sv",
+     "options": [
+      "den här bil",
+      "den här bilen",
+      "denna bilen"
+     ],
+     "answer": "den här bilen",
+     "explain": "den här takes the definite noun."
+    },
+    {
+     "q": "'This child', with the demonstrative after the noun, in Romanian:",
+     "lang": "ro",
+     "answer": "copilul acesta",
+     "accept": [
+      "Copilul acesta"
+     ],
+     "explain": "Definite noun + long form."
+    }
+   ]
+  },
+  {
+   "id": "ro-demonstratives",
+   "feature": "Demonstratives",
+   "langs": [
+    "ro"
+   ],
+   "level": "beginner",
+   "added": "2026-10-10",
+   "title": "Romanian demonstratives: acest, acel and their friends",
+   "summary": "Romanian has two degrees of distance, acest (this) and acel (that), which agree with the noun in gender, number and case. They can stand before a bare noun (acest copil) or after a noun with the definite article (copilul acesta), and everyday speech has short colloquial forms (ăsta, ăla).",
+   "sections": [
+    {
+     "lang": "ro",
+     "name": "Romanian",
+     "overview": "Each demonstrative has a short form used before the noun and a long form ending in -a used after the noun or on its own as a pronoun. Both decline: nominative-accusative and genitive-dative. Neuter nouns take the masculine forms in the singular and the feminine forms in the plural.",
+     "tables": [
+      {
+       "title": "acest (this)",
+       "cols": [
+        "m. sg",
+        "f. sg",
+        "m. pl",
+        "f. pl"
+       ],
+       "rows": [
+        {
+         "label": "before noun, nom-acc",
+         "cells": [
+          "acest",
+          "această",
+          "acești",
+          "aceste"
+         ]
+        },
+        {
+         "label": "after noun / alone, nom-acc",
+         "cells": [
+          "acesta",
+          "aceasta",
+          "aceștia",
+          "acestea"
+         ]
+        },
+        {
+         "label": "before noun, gen-dat",
+         "cells": [
+          "acestui",
+          "acestei",
+          "acestor",
+          "acestor"
+         ]
+        },
+        {
+         "label": "after noun / alone, gen-dat",
+         "cells": [
+          "acestuia",
+          "acesteia",
+          "acestora",
+          "acestora"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "acel (that)",
+       "cols": [
+        "m. sg",
+        "f. sg",
+        "m. pl",
+        "f. pl"
+       ],
+       "rows": [
+        {
+         "label": "before noun, nom-acc",
+         "cells": [
+          "acel",
+          "acea",
+          "acei",
+          "acele"
+         ]
+        },
+        {
+         "label": "after noun / alone, nom-acc",
+         "cells": [
+          "acela",
+          "aceea",
+          "aceia",
+          "acelea"
+         ]
+        },
+        {
+         "label": "before noun, gen-dat",
+         "cells": [
+          "acelui",
+          "acelei",
+          "acelor",
+          "acelor"
+         ]
+        },
+        {
+         "label": "after noun / alone, gen-dat",
+         "cells": [
+          "aceluia",
+          "aceleia",
+          "acelora",
+          "acelora"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Colloquial (nom-acc)",
+       "cols": [
+        "m. sg",
+        "f. sg",
+        "m. pl",
+        "f. pl"
+       ],
+       "rows": [
+        {
+         "label": "this",
+         "cells": [
+          "ăsta",
+          "asta",
+          "ăștia",
+          "astea"
+         ]
+        },
+        {
+         "label": "that",
+         "cells": [
+          "ăla",
+          "aia",
+          "ăia",
+          "alea"
+         ]
+        }
+       ]
+      }
+     ],
+     "examples": [
+      {
+       "words": [
+        {
+         "w": "Acest",
+         "g": "this.M.SG"
+        },
+        {
+         "w": "copil",
+         "g": "child"
+        },
+        {
+         "w": "citește.",
+         "g": "read.3SG.PRS"
+        }
+       ],
+       "translation": "This child is reading.",
+       "note": "Before the noun: short form, bare noun."
+      },
+      {
+       "words": [
+        {
+         "w": "Copilul",
+         "g": "child-DEF"
+        },
+        {
+         "w": "acesta",
+         "g": "this.M.SG"
+        },
+        {
+         "w": "citește.",
+         "g": "read.3SG.PRS"
+        }
+       ],
+       "translation": "This child is reading.",
+       "note": "After the noun: the noun takes the definite article and the demonstrative ends in -a. Common in speech."
+      },
+      {
+       "words": [
+        {
+         "w": "Cartea",
+         "g": "book-DEF.F.SG"
+        },
+        {
+         "w": "aceea",
+         "g": "that.F.SG"
+        },
+        {
+         "w": "e",
+         "g": "be.3SG"
+        },
+        {
+         "w": "a",
+         "g": "POSS.F.SG"
+        },
+        {
+         "w": "mea.",
+         "g": "my.F.SG"
+        }
+       ],
+       "translation": "That book is mine."
+      },
+      {
+       "words": [
+        {
+         "w": "Mama",
+         "g": "mother-DEF"
+        },
+        {
+         "w": "acestui",
+         "g": "this.M.SG.GEN"
+        },
+        {
+         "w": "copil",
+         "g": "child"
+        },
+        {
+         "w": "este",
+         "g": "be.3SG"
+        },
+        {
+         "w": "profesoară.",
+         "g": "teacher.F"
+        }
+       ],
+       "translation": "This child's mother is a teacher.",
+       "note": "Genitive-dative forms end in -ui (m.), -ei (f.), -or (pl.)."
+      },
+      {
+       "words": [
+        {
+         "w": "Ăsta",
+         "g": "this.M.SG"
+        },
+        {
+         "w": "e",
+         "g": "be.3SG"
+        },
+        {
+         "w": "prietenul",
+         "g": "friend-DEF"
+        },
+        {
+         "w": "meu.",
+         "g": "my.M.SG"
+        }
+       ],
+       "translation": "This is my friend.",
+       "note": "Colloquial form; avoid it in formal writing."
+      }
+     ],
+     "pitfalls": [
+      "Before the noun, the noun stays bare: acest copil. After it, the noun needs the definite article: copilul acesta. *acest copilul and *copil acesta are both wrong.",
+      "Neuter nouns: masculine forms in the singular, feminine in the plural: acest tren, aceste trenuri.",
+      "Asta on its own often means 'this (thing, matter)': Asta e bine. — That's good."
+     ]
+    }
+   ],
+   "mnemonic": "Short form in front, long form (+a) behind: acest copil, copilul acesta.",
+   "related": [
+    {
+     "id": "demonstratives-compare",
+     "feature": "Demonstratives across five languages",
+     "why": "See where Romanian sits among Hungarian, Finnish, Swedish and Gaelic."
+    },
+    {
+     "id": "suffixed-article-ro-sv",
+     "feature": "The suffixed definite article",
+     "why": "Copilul acesta needs the article -ul, which grew out of a Latin demonstrative."
+    }
+   ],
+   "drill": [
+    {
+     "q": "___ casă este nouă. (this)",
+     "lang": "ro",
+     "options": [
+      "Acest",
+      "Această",
+      "Aceasta",
+      "Acestei"
+     ],
+     "answer": "Această",
+     "explain": "casă is feminine singular, and the demonstrative stands before the noun: această."
+    },
+    {
+     "q": "Cartea ___ e a mea. (that)",
+     "lang": "ro",
+     "answer": "aceea",
+     "accept": [
+      "Aceea"
+     ],
+     "explain": "After a definite feminine noun use the long form: cartea aceea."
+    },
+    {
+     "q": "Which is correct for 'this child'?",
+     "lang": "ro",
+     "options": [
+      "acest copilul",
+      "copilul acesta",
+      "copil acesta"
+     ],
+     "answer": "copilul acesta",
+     "explain": "After the noun the noun takes -ul and the demonstrative takes -a."
+    },
+    {
+     "q": "Colloquial 'these' (feminine):",
+     "lang": "ro",
+     "options": [
+      "ăștia",
+      "astea",
+      "alea",
+      "aia"
+     ],
+     "answer": "astea",
+     "explain": "ăștia is masculine plural; alea and aia mean 'those' and 'that'."
+    }
+   ]
+  },
+  {
+   "id": "hu-demonstratives",
+   "feature": "Demonstratives",
+   "langs": [
+    "hu"
+   ],
+   "level": "beginner",
+   "added": "2026-10-10",
+   "title": "Hungarian demonstratives: ez and az, with every case",
+   "summary": "Hungarian has ez (this) and az (that). Before a noun they need the definite article and repeat the noun's case ending, so 'in this house' is ebben a házban: the demonstrative itself carries -ban too.",
+   "sections": [
+    {
+     "lang": "hu",
+     "name": "Hungarian",
+     "overview": "Pattern: demonstrative + a/az + noun, with the same case suffix on the demonstrative and the noun. Suffixes starting with a consonant make the final z of ez/az assimilate: ez + ben → ebben, az + val → azzal.",
+     "tables": [
+      {
+       "title": "ez / az in the cases",
+       "cols": [
+        "ez (this)",
+        "az (that)",
+        "ezek (these)",
+        "azok (those)"
+       ],
+       "rows": [
+        {
+         "label": "nominative",
+         "cells": [
+          "ez",
+          "az",
+          "ezek",
+          "azok"
+         ]
+        },
+        {
+         "label": "accusative",
+         "cells": [
+          "ezt",
+          "azt",
+          "ezeket",
+          "azokat"
+         ]
+        },
+        {
+         "label": "dative",
+         "cells": [
+          "ennek",
+          "annak",
+          "ezeknek",
+          "azoknak"
+         ]
+        },
+        {
+         "label": "inessive (in)",
+         "cells": [
+          "ebben",
+          "abban",
+          "ezekben",
+          "azokban"
+         ]
+        },
+        {
+         "label": "elative (out of)",
+         "cells": [
+          "ebből",
+          "abból",
+          "ezekből",
+          "azokból"
+         ]
+        },
+        {
+         "label": "illative (into)",
+         "cells": [
+          "ebbe",
+          "abba",
+          "ezekbe",
+          "azokba"
+         ]
+        },
+        {
+         "label": "superessive (on)",
+         "cells": [
+          "ezen",
+          "azon",
+          "ezeken",
+          "azokon"
+         ]
+        },
+        {
+         "label": "sublative (onto)",
+         "cells": [
+          "erre",
+          "arra",
+          "ezekre",
+          "azokra"
+         ]
+        },
+        {
+         "label": "allative (to)",
+         "cells": [
+          "ehhez",
+          "ahhoz",
+          "ezekhez",
+          "azokhoz"
+         ]
+        },
+        {
+         "label": "ablative (from)",
+         "cells": [
+          "ettől",
+          "attól",
+          "ezektől",
+          "azoktól"
+         ]
+        },
+        {
+         "label": "instrumental (with)",
+         "cells": [
+          "ezzel",
+          "azzal",
+          "ezekkel",
+          "azokkal"
+         ]
+        }
+       ]
+      }
+     ],
+     "examples": [
+      {
+       "words": [
+        {
+         "w": "Ez",
+         "g": "this"
+        },
+        {
+         "w": "a",
+         "g": "the"
+        },
+        {
+         "w": "ház",
+         "g": "house"
+        },
+        {
+         "w": "régi.",
+         "g": "old"
+        }
+       ],
+       "translation": "This house is old.",
+       "note": "The article a is obligatory: not *ez ház."
+      },
+      {
+       "words": [
+        {
+         "w": "Ebben",
+         "g": "this.INE"
+        },
+        {
+         "w": "a",
+         "g": "the"
+        },
+        {
+         "w": "házban",
+         "g": "house.INE"
+        },
+        {
+         "w": "lakom.",
+         "g": "live.1SG"
+        }
+       ],
+       "translation": "I live in this house.",
+       "note": "-ban appears twice: on ez (ebben) and on the noun."
+      },
+      {
+       "words": [
+        {
+         "w": "Azt",
+         "g": "that.ACC"
+        },
+        {
+         "w": "a",
+         "g": "the"
+        },
+        {
+         "w": "könyvet",
+         "g": "book.ACC"
+        },
+        {
+         "w": "olvasom.",
+         "g": "read.1SG.DEF"
+        }
+       ],
+       "translation": "I'm reading that book.",
+       "note": "A demonstrative object takes the definite conjugation: olvasom, not olvasok."
+      },
+      {
+       "words": [
+        {
+         "w": "Azokkal",
+         "g": "that.PL.INS"
+        },
+        {
+         "w": "a",
+         "g": "the"
+        },
+        {
+         "w": "gyerekekkel",
+         "g": "child.PL.INS"
+        },
+        {
+         "w": "játszom.",
+         "g": "play.1SG"
+        }
+       ],
+       "translation": "I play with those children."
+      },
+      {
+       "words": [
+        {
+         "w": "Ezt",
+         "g": "this.ACC"
+        },
+        {
+         "w": "kérem.",
+         "g": "ask.1SG.DEF"
+        }
+       ],
+       "translation": "I'd like this one.",
+       "note": "Alone, ez/az take the case ending themselves."
+      }
+     ],
+     "pitfalls": [
+      "Never drop the article: ez a ház, ez az alma (az before a vowel).",
+      "The demonstrative copies the noun's case and number: ezekben a házakban.",
+      "Watch the assimilation: ez + vel → ezzel, az + nak → annak, ez + hez → ehhez."
+     ]
+    }
+   ],
+   "mnemonic": "Say the case twice: ebben a házban, azzal a tollal.",
+   "related": [
+    {
+     "id": "demonstratives-compare",
+     "feature": "Demonstratives across five languages",
+     "why": "Finnish demonstratives copy the case too, but without an article."
+    },
+    {
+     "id": "fi-demonstratives",
+     "feature": "Finnish demonstratives",
+     "why": "A related Uralic system with three degrees instead of two."
+    }
+   ],
+   "drill": [
+    {
+     "q": "___ a házban (in this house)",
+     "lang": "hu",
+     "options": [
+      "ez",
+      "ezben",
+      "ebben",
+      "ebbe"
+     ],
+     "answer": "ebben",
+     "explain": "The inessive -ban/-ben goes on the demonstrative as well, and ez + ben assimilates to ebben."
+    },
+    {
+     "q": "Látom ___ az autót. (that car, object)",
+     "lang": "hu",
+     "options": [
+      "az",
+      "azt",
+      "azon",
+      "annak"
+     ],
+     "answer": "azt",
+     "explain": "The object is accusative, so the demonstrative is accusative too: azt az autót."
+    },
+    {
+     "q": "___ a tollal (with this pen)",
+     "lang": "hu",
+     "answer": "ezzel",
+     "accept": [
+      "Ezzel"
+     ],
+     "explain": "Instrumental -val/-vel: ez + vel → ezzel."
+    },
+    {
+     "q": "Which means 'This house is old'?",
+     "lang": "hu",
+     "options": [
+      "Ez ház régi.",
+      "Ez a ház régi.",
+      "Ez a háza régi."
+     ],
+     "answer": "Ez a ház régi.",
+     "explain": "Demonstrative + article + noun."
+    }
+   ]
+  },
+  {
+   "id": "fi-demonstratives",
+   "feature": "Demonstratives",
+   "langs": [
+    "fi"
+   ],
+   "level": "beginner",
+   "added": "2026-10-10",
+   "title": "Finnish demonstratives: tämä, tuo and se",
+   "summary": "Finnish has three demonstratives: tämä (this, near me), tuo (that, pointing over there) and se (that or it: already known, or near the listener). There are no articles, and the demonstrative takes the same case as its noun: tässä talossa, 'in this house'.",
+   "sections": [
+    {
+     "lang": "fi",
+     "name": "Finnish",
+     "overview": "All three decline through the cases like nouns, with stem changes: tämä → tä-, tuo → tuo-, se → si-. In the plural they are nämä, nuo and ne.",
+     "tables": [
+      {
+       "title": "Singular",
+       "cols": [
+        "tämä (this)",
+        "tuo (that)",
+        "se (it, that)"
+       ],
+       "rows": [
+        {
+         "label": "nominative",
+         "cells": [
+          "tämä",
+          "tuo",
+          "se"
+         ]
+        },
+        {
+         "label": "genitive",
+         "cells": [
+          "tämän",
+          "tuon",
+          "sen"
+         ]
+        },
+        {
+         "label": "partitive",
+         "cells": [
+          "tätä",
+          "tuota",
+          "sitä"
+         ]
+        },
+        {
+         "label": "inessive (in)",
+         "cells": [
+          "tässä",
+          "tuossa",
+          "siinä"
+         ]
+        },
+        {
+         "label": "elative (out of)",
+         "cells": [
+          "tästä",
+          "tuosta",
+          "siitä"
+         ]
+        },
+        {
+         "label": "illative (into)",
+         "cells": [
+          "tähän",
+          "tuohon",
+          "siihen"
+         ]
+        },
+        {
+         "label": "adessive (on, at)",
+         "cells": [
+          "tällä",
+          "tuolla",
+          "sillä"
+         ]
+        },
+        {
+         "label": "ablative (from)",
+         "cells": [
+          "tältä",
+          "tuolta",
+          "siltä"
+         ]
+        },
+        {
+         "label": "allative (onto, to)",
+         "cells": [
+          "tälle",
+          "tuolle",
+          "sille"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Plural",
+       "cols": [
+        "nämä (these)",
+        "nuo (those)",
+        "ne (they, those)"
+       ],
+       "rows": [
+        {
+         "label": "nominative",
+         "cells": [
+          "nämä",
+          "nuo",
+          "ne"
+         ]
+        },
+        {
+         "label": "genitive",
+         "cells": [
+          "näiden",
+          "noiden",
+          "niiden"
+         ]
+        },
+        {
+         "label": "partitive",
+         "cells": [
+          "näitä",
+          "noita",
+          "niitä"
+         ]
+        },
+        {
+         "label": "inessive (in)",
+         "cells": [
+          "näissä",
+          "noissa",
+          "niissä"
+         ]
+        },
+        {
+         "label": "elative (out of)",
+         "cells": [
+          "näistä",
+          "noista",
+          "niistä"
+         ]
+        },
+        {
+         "label": "illative (into)",
+         "cells": [
+          "näihin",
+          "noihin",
+          "niihin"
+         ]
+        },
+        {
+         "label": "adessive (on, at)",
+         "cells": [
+          "näillä",
+          "noilla",
+          "niillä"
+         ]
+        },
+        {
+         "label": "ablative (from)",
+         "cells": [
+          "näiltä",
+          "noilta",
+          "niiltä"
+         ]
+        },
+        {
+         "label": "allative (onto, to)",
+         "cells": [
+          "näille",
+          "noille",
+          "niille"
+         ]
+        }
+       ]
+      }
+     ],
+     "examples": [
+      {
+       "words": [
+        {
+         "w": "Tämä",
+         "g": "this"
+        },
+        {
+         "w": "talo",
+         "g": "house"
+        },
+        {
+         "w": "on",
+         "g": "be.3SG"
+        },
+        {
+         "w": "vanha.",
+         "g": "old"
+        }
+       ],
+       "translation": "This house is old."
+      },
+      {
+       "words": [
+        {
+         "w": "Asun",
+         "g": "live.1SG"
+        },
+        {
+         "w": "tässä",
+         "g": "this.INE"
+        },
+        {
+         "w": "talossa.",
+         "g": "house.INE"
+        }
+       ],
+       "translation": "I live in this house.",
+       "note": "Same case on both words: tässä talossa."
+      },
+      {
+       "words": [
+        {
+         "w": "Luen",
+         "g": "read.1SG"
+        },
+        {
+         "w": "tuota",
+         "g": "that.PART"
+        },
+        {
+         "w": "kirjaa.",
+         "g": "book.PART"
+        }
+       ],
+       "translation": "I'm reading that book (over there).",
+       "note": "An ongoing activity takes a partitive object, and tuo follows: tuota kirjaa."
+      },
+      {
+       "words": [
+        {
+         "w": "Mikä",
+         "g": "what"
+        },
+        {
+         "w": "tuo",
+         "g": "that"
+        },
+        {
+         "w": "on?",
+         "g": "be.3SG"
+        }
+       ],
+       "translation": "What is that (over there)?"
+      },
+      {
+       "words": [
+        {
+         "w": "Se",
+         "g": "it"
+        },
+        {
+         "w": "on",
+         "g": "be.3SG"
+        },
+        {
+         "w": "kirja.",
+         "g": "book"
+        }
+       ],
+       "translation": "It's a book.",
+       "note": "se refers back to something already mentioned."
+      }
+     ],
+     "pitfalls": [
+      "tuo points at something away from both speakers; se is for what is already known, mentioned, or near the listener.",
+      "The demonstrative takes the noun's case: tuohon taloon, siitä kirjasta.",
+      "In speech, se and ne usually replace hän and he for people, and tämä/tuo are often tää/toi."
+     ]
+    }
+   ],
+   "mnemonic": "tämä here with me, tuo over there, se the one we both know.",
+   "related": [
+    {
+     "id": "demonstratives-compare",
+     "feature": "Demonstratives across five languages",
+     "why": "Gaelic also has a three-way system: seo, sin, siud."
+    },
+    {
+     "id": "hu-demonstratives",
+     "feature": "Hungarian demonstratives",
+     "why": "The Uralic cousin: two degrees, plus an obligatory article."
+    }
+   ],
+   "drill": [
+    {
+     "q": "___ talossa (in that house over there)",
+     "lang": "fi",
+     "options": [
+      "tuo",
+      "tuossa",
+      "tuohon",
+      "tuolla"
+     ],
+     "answer": "tuossa",
+     "explain": "Inessive of tuo: tuossa, matching talossa."
+    },
+    {
+     "q": "Luen ___ kirjaa. (this)",
+     "lang": "fi",
+     "answer": "tätä",
+     "accept": [
+      "Tätä"
+     ],
+     "explain": "Partitive object, so the partitive of tämä: tätä."
+    },
+    {
+     "q": "Plural of tuo:",
+     "lang": "fi",
+     "options": [
+      "nämä",
+      "nuo",
+      "ne",
+      "noita"
+     ],
+     "answer": "nuo",
+     "explain": "nämä is the plural of tämä, ne of se; noita is partitive plural."
+    }
+   ]
+  },
+  {
+   "id": "sv-demonstratives",
+   "feature": "Demonstratives",
+   "langs": [
+    "sv"
+   ],
+   "level": "beginner",
+   "added": "2026-10-10",
+   "title": "Swedish demonstratives: den här, det där, denna",
+   "summary": "Swedish builds 'this' and 'that' from den/det/de plus här (here) or där (there), followed by the noun in its definite form: den här bilen. The formal written denna, detta, dessa take the noun in its indefinite form: denna bil.",
+   "sections": [
+    {
+     "lang": "sv",
+     "name": "Swedish",
+     "overview": "Choose den for en-words, det for ett-words and de for plurals, then add här or där. The noun keeps its definite ending, which is unusual: literally 'that there the car'.",
+     "tables": [
+      {
+       "title": "Forms",
+       "cols": [
+        "en-word",
+        "ett-word",
+        "plural"
+       ],
+       "rows": [
+        {
+         "label": "this, these",
+         "cells": [
+          "den här",
+          "det här",
+          "de här"
+         ]
+        },
+        {
+         "label": "that, those",
+         "cells": [
+          "den där",
+          "det där",
+          "de där"
+         ]
+        },
+        {
+         "label": "formal 'this, these'",
+         "cells": [
+          "denna",
+          "detta",
+          "dessa"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "With a noun",
+       "cols": [
+        "en-word (bil)",
+        "ett-word (hus)",
+        "plural (bilar)"
+       ],
+       "rows": [
+        {
+         "label": "den här type",
+         "cells": [
+          "den här bilen",
+          "det här huset",
+          "de här bilarna"
+         ]
+        },
+        {
+         "label": "denna type",
+         "cells": [
+          "denna bil",
+          "detta hus",
+          "dessa bilar"
+         ]
+        }
+       ]
+      }
+     ],
+     "examples": [
+      {
+       "words": [
+        {
+         "w": "Den här",
+         "g": "this.COM"
+        },
+        {
+         "w": "bilen",
+         "g": "car-DEF"
+        },
+        {
+         "w": "är",
+         "g": "be.PRS"
+        },
+        {
+         "w": "ny.",
+         "g": "new"
+        }
+       ],
+       "translation": "This car is new."
+      },
+      {
+       "words": [
+        {
+         "w": "Det där",
+         "g": "that.NEUT"
+        },
+        {
+         "w": "huset",
+         "g": "house-DEF"
+        },
+        {
+         "w": "är",
+         "g": "be.PRS"
+        },
+        {
+         "w": "gammalt.",
+         "g": "old.NEUT"
+        }
+       ],
+       "translation": "That house is old.",
+       "note": "The adjective agrees too: gammalt for an ett-word."
+      },
+      {
+       "words": [
+        {
+         "w": "Jag",
+         "g": "I"
+        },
+        {
+         "w": "gillar",
+         "g": "like.PRS"
+        },
+        {
+         "w": "de här",
+         "g": "these"
+        },
+        {
+         "w": "skorna.",
+         "g": "shoe.PL-DEF"
+        }
+       ],
+       "translation": "I like these shoes.",
+       "note": "de is pronounced 'dom' in most speech."
+      },
+      {
+       "words": [
+        {
+         "w": "Denna",
+         "g": "this.COM"
+        },
+        {
+         "w": "fråga",
+         "g": "question"
+        },
+        {
+         "w": "är",
+         "g": "be.PRS"
+        },
+        {
+         "w": "viktig.",
+         "g": "important"
+        }
+       ],
+       "translation": "This question is important.",
+       "note": "Written style: denna + indefinite noun."
+      }
+     ],
+     "pitfalls": [
+      "den här + definite noun (den här bilen), but denna + indefinite noun in standard written Swedish (denna bil).",
+      "Match den/det to the noun's gender: det här huset, not *den här huset.",
+      "Stressed den alone can also mean 'that': DEN bilen vill jag ha."
+     ]
+    }
+   ],
+   "mnemonic": "den här bilen: the car, here. denna bil: plain and formal.",
+   "related": [
+    {
+     "id": "demonstratives-compare",
+     "feature": "Demonstratives across five languages",
+     "why": "Compare how each language marks 'this' and 'that'."
+    },
+    {
+     "id": "suffixed-article-ro-sv",
+     "feature": "The suffixed definite article",
+     "why": "Why bilen already ends in -en, and why Romanian does something similar."
+    }
+   ],
+   "drill": [
+    {
+     "q": "___ huset (this house; hus is an ett-word)",
+     "lang": "sv",
+     "options": [
+      "den här",
+      "det här",
+      "de här",
+      "detta"
+     ],
+     "answer": "det här",
+     "explain": "ett-words take det: det här huset."
+    },
+    {
+     "q": "Formal: denna ___ (car)",
+     "lang": "sv",
+     "options": [
+      "bil",
+      "bilen",
+      "bilar",
+      "bilarna"
+     ],
+     "answer": "bil",
+     "explain": "denna takes the indefinite noun."
+    },
+    {
+     "q": "de här ___ (these cars)",
+     "lang": "sv",
+     "answer": "bilarna",
+     "accept": [
+      "Bilarna"
+     ],
+     "explain": "de här takes the definite plural: bilarna."
+    }
+   ]
+  },
+  {
+   "id": "gd-demonstratives",
+   "feature": "Demonstratives",
+   "langs": [
+    "gd"
+   ],
+   "level": "beginner",
+   "added": "2026-10-10",
+   "title": "Scottish Gaelic demonstratives: seo, sin and siud",
+   "summary": "Gaelic has three degrees: seo (this, here by me), sin (that, near you or just mentioned) and siud (yon, far away). They come after the noun, and the noun takes the article: an taigh seo, 'this house'.",
+   "sections": [
+    {
+     "lang": "gd",
+     "name": "Scottish Gaelic",
+     "overview": "The demonstratives never change form. After a noun the far form is usually ud; standing alone it is siud. With an adjective, the demonstrative comes last: an taigh mòr seo.",
+     "tables": [
+      {
+       "title": "Forms",
+       "cols": [
+        "near me",
+        "near you / mentioned",
+        "far away"
+       ],
+       "rows": [
+        {
+         "label": "after a noun",
+         "cells": [
+          "an taigh seo",
+          "an taigh sin",
+          "an taigh ud"
+         ]
+        },
+        {
+         "label": "on its own",
+         "cells": [
+          "seo",
+          "sin",
+          "siud"
+         ]
+        },
+        {
+         "label": "place: an + …",
+         "cells": [
+          "an seo (here)",
+          "an sin (there)",
+          "an siud (over there)"
+         ]
+        }
+       ]
+      }
+     ],
+     "examples": [
+      {
+       "words": [
+        {
+         "w": "Tha",
+         "g": "be.PRS"
+        },
+        {
+         "w": "an",
+         "g": "the"
+        },
+        {
+         "w": "taigh",
+         "g": "house"
+        },
+        {
+         "w": "seo",
+         "g": "this"
+        },
+        {
+         "w": "mòr.",
+         "g": "big"
+        }
+       ],
+       "translation": "This house is big."
+      },
+      {
+       "words": [
+        {
+         "w": "Seo",
+         "g": "this"
+        },
+        {
+         "w": "mo",
+         "g": "my"
+        },
+        {
+         "w": "phiuthar.",
+         "g": "sister.LEN"
+        }
+       ],
+       "translation": "This is my sister.",
+       "note": "Seo alone introduces someone or something."
+      },
+      {
+       "words": [
+        {
+         "w": "Dè",
+         "g": "what"
+        },
+        {
+         "w": "tha",
+         "g": "be.PRS"
+        },
+        {
+         "w": "sin?",
+         "g": "that"
+        }
+       ],
+       "translation": "What's that?"
+      },
+      {
+       "words": [
+        {
+         "w": "Chì",
+         "g": "see.FUT"
+        },
+        {
+         "w": "mi",
+         "g": "I"
+        },
+        {
+         "w": "an",
+         "g": "the"
+        },
+        {
+         "w": "caisteal",
+         "g": "castle"
+        },
+        {
+         "w": "ud.",
+         "g": "yon"
+        }
+       ],
+       "translation": "I see that castle over there."
+      }
+     ],
+     "pitfalls": [
+      "Keep the article: an taigh seo, not *taigh seo.",
+      "Order is noun, adjective, demonstrative: an taigh mòr seo.",
+      "Use ud after a noun and siud on its own."
+     ]
+    }
+   ],
+   "mnemonic": "seo-sin-siud: me, you, yonder.",
+   "related": [
+    {
+     "id": "demonstratives-compare",
+     "feature": "Demonstratives across five languages",
+     "why": "Gaelic and Finnish share a three-way split; only Gaelic puts it after the noun."
+    },
+    {
+     "id": "fi-demonstratives",
+     "feature": "Finnish demonstratives",
+     "why": "Another three-degree system, but before the noun and declined for case."
+    }
+   ],
+   "drill": [
+    {
+     "q": "this dog (cù):",
+     "lang": "gd",
+     "options": [
+      "seo an cù",
+      "an cù seo",
+      "cù seo",
+      "an seo cù"
+     ],
+     "answer": "an cù seo",
+     "explain": "Article + noun + seo."
+    },
+    {
+     "q": "this big house:",
+     "lang": "gd",
+     "options": [
+      "an taigh seo mòr",
+      "an taigh mòr seo"
+     ],
+     "answer": "an taigh mòr seo",
+     "explain": "The demonstrative comes after the adjective."
+    },
+    {
+     "q": "Dè tha ___? (What's that?)",
+     "lang": "gd",
+     "answer": "sin",
+     "accept": [
+      "Sin"
+     ],
+     "explain": "sin is 'that' near you or just mentioned."
+    }
+   ]
+  },
+  {
+   "id": "suffixed-article-ro-sv",
+   "feature": "Definite article",
+   "langs": [
+    "ro",
+    "sv"
+   ],
+   "level": "intermediate",
+   "added": "2026-10-10",
+   "title": "The suffixed definite article in Romanian and Swedish",
+   "summary": "Romanian and Swedish, unrelated within Indo-European, both glue 'the' to the end of the word: casa (the house), huset (the house). Both articles grew out of demonstratives: Romanian -ul from Latin ille, Swedish -en from Old Norse hinn.",
+   "matrix": {
+    "title": "At a glance",
+    "cols": [
+     "Romanian",
+     "Swedish"
+    ],
+    "rows": [
+     {
+      "label": "where 'the' goes",
+      "cells": [
+       "end of the first word of the noun phrase (noun or adjective)",
+       "end of the noun"
+      ]
+     },
+     {
+      "label": "with an adjective",
+      "cells": [
+       "fata frumoasă or frumoasa fată",
+       "den stora bilen: den + adjective in -a + noun with -en"
+      ]
+     },
+     {
+      "label": "declines for case",
+      "cells": [
+       "yes: casei, caselor (gen-dat)",
+       "no; possessive -s: bilens"
+      ]
+     },
+     {
+      "label": "indefinite article",
+      "cells": [
+       "un / o before the noun",
+       "en / ett before the noun"
+      ]
+     }
+    ]
+   },
+   "sections": [
+    {
+     "lang": "ro",
+     "name": "Romanian",
+     "overview": "The article depends on gender, number, case and the noun's ending: -ul or -le for masculine and neuter singular, -a for feminine singular, -i and -le in the plural.",
+     "tables": [
+      {
+       "title": "băiat (boy), casă (house)",
+       "cols": [
+        "m./n. sg",
+        "f. sg",
+        "m. pl",
+        "f./n. pl"
+       ],
+       "rows": [
+        {
+         "label": "indefinite",
+         "cells": [
+          "un băiat",
+          "o casă",
+          "niște băieți",
+          "niște case"
+         ]
+        },
+        {
+         "label": "definite, nom-acc",
+         "cells": [
+          "băiatul",
+          "casa",
+          "băieții",
+          "casele"
+         ]
+        },
+        {
+         "label": "definite, gen-dat",
+         "cells": [
+          "băiatului",
+          "casei",
+          "băieților",
+          "caselor"
+         ]
+        }
+       ]
+      }
+     ],
+     "examples": [
+      {
+       "words": [
+        {
+         "w": "Casa",
+         "g": "house-DEF"
+        },
+        {
+         "w": "este",
+         "g": "be.3SG"
+        },
+        {
+         "w": "mare.",
+         "g": "big"
+        }
+       ],
+       "translation": "The house is big."
+      },
+      {
+       "words": [
+        {
+         "w": "Fata",
+         "g": "girl-DEF"
+        },
+        {
+         "w": "frumoasă",
+         "g": "beautiful.F"
+        },
+        {
+         "w": "cântă.",
+         "g": "sing.3SG"
+        }
+       ],
+       "translation": "The beautiful girl is singing."
+      },
+      {
+       "words": [
+        {
+         "w": "Frumoasa",
+         "g": "beautiful-DEF.F"
+        },
+        {
+         "w": "fată",
+         "g": "girl"
+        },
+        {
+         "w": "cântă.",
+         "g": "sing.3SG"
+        }
+       ],
+       "translation": "The beautiful girl is singing.",
+       "note": "With the adjective first, the article moves to the adjective: a more literary order."
+      }
+     ],
+     "pitfalls": [
+      "Nouns ending in -e take -le in the masculine singular: frate → fratele.",
+      "After a preposition other than cu, the noun is usually bare: pe masă, not pe masa — but with a modifier it takes the article: pe masa mare."
+     ]
+    },
+    {
+     "lang": "sv",
+     "name": "Swedish",
+     "overview": "en-words take -en/-n, ett-words -et/-t; plurals take -na, -a or -en. With an adjective, Swedish marks definiteness twice: den stora bilen.",
+     "tables": [
+      {
+       "title": "bil (car), hus (house)",
+       "cols": [
+        "en-word",
+        "ett-word"
+       ],
+       "rows": [
+        {
+         "label": "indefinite singular",
+         "cells": [
+          "en bil",
+          "ett hus"
+         ]
+        },
+        {
+         "label": "definite singular",
+         "cells": [
+          "bilen",
+          "huset"
+         ]
+        },
+        {
+         "label": "indefinite plural",
+         "cells": [
+          "bilar",
+          "hus"
+         ]
+        },
+        {
+         "label": "definite plural",
+         "cells": [
+          "bilarna",
+          "husen"
+         ]
+        }
+       ]
+      }
+     ],
+     "examples": [
+      {
+       "words": [
+        {
+         "w": "Huset",
+         "g": "house-DEF"
+        },
+        {
+         "w": "är",
+         "g": "be.PRS"
+        },
+        {
+         "w": "rött.",
+         "g": "red.NEUT"
+        }
+       ],
+       "translation": "The house is red."
+      },
+      {
+       "words": [
+        {
+         "w": "Den",
+         "g": "the.COM"
+        },
+        {
+         "w": "stora",
+         "g": "big.DEF"
+        },
+        {
+         "w": "bilen",
+         "g": "car-DEF"
+        },
+        {
+         "w": "är",
+         "g": "be.PRS"
+        },
+        {
+         "w": "min.",
+         "g": "mine.COM"
+        }
+       ],
+       "translation": "The big car is mine.",
+       "note": "Double definiteness: den before the adjective and -en on the noun."
+      }
+     ],
+     "pitfalls": [
+      "Don't forget den/det/de before an adjective: den stora bilen, not *stora bilen in neutral prose.",
+      "ett-words ending in a vowel take only -t: äpple → äpplet."
+     ]
+    }
+   ],
+   "contrasts": [
+    {
+     "point": "Same history",
+     "detail": "Both suffixes started life as a demonstrative 'that' placed after the noun, then fused with it."
+    },
+    {
+     "point": "Adjectives",
+     "detail": "Romanian moves the article onto whatever comes first; Swedish keeps it on the noun and adds den/det/de in front."
+    }
+   ],
+   "mnemonic": "Romanian marks the first word, Swedish marks the noun (and adds den in front of an adjective).",
+   "related": [
+    {
+     "id": "ro-demonstratives",
+     "feature": "Romanian demonstratives",
+     "why": "copilul acesta combines the suffixed article with a demonstrative."
+    },
+    {
+     "id": "sv-demonstratives",
+     "feature": "Swedish demonstratives",
+     "why": "den här bilen: demonstrative plus suffixed article."
+    },
+    {
+     "id": "demonstratives-compare",
+     "feature": "Demonstratives across five languages",
+     "why": "Where the articles came from."
+    }
+   ],
+   "drill": [
+    {
+     "q": "Romanian 'the house' (casă):",
+     "lang": "ro",
+     "options": [
+      "casă",
+      "casa",
+      "casei",
+      "casele"
+     ],
+     "answer": "casa",
+     "explain": "Feminine singular -ă → -a."
+    },
+    {
+     "q": "Swedish 'the house' (ett hus):",
+     "lang": "sv",
+     "options": [
+      "husen",
+      "huset",
+      "hus"
+     ],
+     "answer": "huset",
+     "explain": "ett-words take -et."
+    },
+    {
+     "q": "Swedish 'the big car':",
+     "lang": "sv",
+     "options": [
+      "stora bilen",
+      "den stora bilen",
+      "den stor bilen"
+     ],
+     "answer": "den stora bilen",
+     "explain": "Double definiteness."
+    },
+    {
+     "q": "Romanian 'of the house' (gen-dat):",
+     "lang": "ro",
+     "answer": "casei",
+     "accept": [
+      "Casei"
+     ],
+     "explain": "Feminine singular gen-dat -ei."
+    }
+   ]
+  }
+ ]
+}

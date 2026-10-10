@@ -1,0 +1,1035 @@
+<title>Taal Teacher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=JetBrains+Mono:wght@400;500&family=Young+Serif&display=swap">
+<style>
+/* Layout: a "studio" bar to pick languages, a feature and a level; below it the lesson (a sheet of paper:
+   comparison matrix, per-language sections with paradigm tables and interlinear examples, practice, questions)
+   and a side column with the curated library and the trail of lessons visited. One column on phones. */
+:root {
+  --bg: #f1ede4; --paper: #fffdf8; --ink: #1d1f24; --muted: #66676f; --line: #ddd5c6; --soft: #f6f2e9;
+  --accent: #0f6b5b; --on-accent: #fffdf8; --red: #b4482c; --ok: #2f7d32; --marker: #f5dc7a; --marker-ink: #3d3200;
+  --ro: #9a3fb0; --hu: #c2410c; --fi: #2b63c4; --sv: #a07800; --gd: #1d8a5a;
+  --shadow: 0 1px 2px rgb(40 30 10 / .06), 0 10px 30px -18px rgb(40 30 10 / .35);
+  --f-display: "Young Serif", Georgia, serif;
+  --f-text: "Literata", "Noto Serif", Georgia, serif;
+  --f-ui: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #15161a; --paper: #1e2026; --ink: #ebe8e1; --muted: #a2a1a8; --line: #343640; --soft: #24262d;
+  --accent: #5fc4ae; --on-accent: #10231f; --red: #f08a6e; --ok: #7fcf83; --marker: #5f5220; --marker-ink: #fff3c4;
+  --ro: #cd7fe0; --hu: #f0874f; --fi: #6f9cf0; --sv: #e3bd3a; --gd: #4cc38d;
+  --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 12px 30px -18px rgb(0 0 0 / .8); color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #15161a; --paper: #1e2026; --ink: #ebe8e1; --muted: #a2a1a8; --line: #343640; --soft: #24262d;
+  --accent: #5fc4ae; --on-accent: #10231f; --red: #f08a6e; --ok: #7fcf83; --marker: #5f5220; --marker-ink: #fff3c4;
+  --ro: #cd7fe0; --hu: #f0874f; --fi: #6f9cf0; --sv: #e3bd3a; --gd: #4cc38d;
+  --shadow: 0 1px 2px rgb(0 0 0 / .3), 0 12px 30px -18px rgb(0 0 0 / .8); color-scheme: dark }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 16px/1.55 var(--f-ui); }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+[hidden] { display: none !important; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 18px 16px 48px; display: grid; gap: 16px; }
+
+/* header */
+header { display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: baseline; gap: 10px; margin-inline-end: auto; min-width: 0; }
+.brand h1 { font: 400 1.9rem/1 var(--f-display); margin: 0; letter-spacing: .01em; }
+.brand h1 b { font-weight: 400; color: var(--accent); }
+.brand p { margin: 0; color: var(--muted); font-size: .9rem; }
+.meter { font: .76rem var(--f-ui); color: var(--muted); border: 1px solid var(--line); background: none; border-radius: 999px; padding: 3px 10px; }
+.meter:disabled { cursor: default; }
+.ghost { font: 700 .82rem var(--f-ui); color: var(--accent); background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 6px 11px; }
+.ghost:hover { border-color: var(--accent); }
+.ghost.nudge { border-color: var(--accent); background: color-mix(in oklab, var(--accent) 14%, transparent); }
+.btn { font: 700 .92rem var(--f-ui); color: var(--on-accent); background: var(--accent); border: 0; border-radius: 8px; padding: 9px 16px; }
+.btn:disabled { opacity: .45; cursor: default; }
+.icon { width: 34px; height: 34px; display: inline-grid; place-items: center; padding: 0; }
+
+/* studio */
+.studio { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); padding: 14px 16px; display: grid; gap: 12px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; }
+.lbl { font: 700 .7rem var(--f-ui); text-transform: uppercase; letter-spacing: .09em; color: var(--muted); min-width: 86px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); background: var(--soft); border-radius: 999px; padding: 4px 6px 4px 11px; font-size: .88rem; }
+.chip .x { border: 0; background: none; color: var(--muted); width: 22px; height: 22px; border-radius: 50%; padding: 0; line-height: 1; }
+.chip .x:hover { background: var(--line); color: var(--ink); }
+.dot { width: 9px; height: 9px; border-radius: 50%; flex: none; display: inline-block; background: var(--c, var(--muted)); }
+.field { border: 1px solid var(--line); background: var(--paper); border-radius: 8px; padding: 7px 10px; min-width: 0; }
+.field:focus { border-color: var(--accent); outline: none; }
+#langInput { width: 190px; }
+#featureInput { flex: 1 1 260px; }
+#focusInput { flex: 1 1 260px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: none; padding: 6px 11px; font-size: .85rem; color: var(--muted); }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+.suggestions { display: flex; flex-wrap: wrap; gap: 6px; }
+.sugg { border: 1px dashed var(--line); background: none; border-radius: 999px; padding: 3px 11px; font-size: .84rem; text-align: left; }
+.sugg:hover { border-color: var(--accent); border-style: solid; }
+.sugg small { color: var(--muted); }
+.go { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+.go .spacer { margin-inline-end: auto; }
+.status { font-size: .86rem; color: var(--muted); min-height: 1.3em; }
+.status.err { color: var(--red); }
+
+/* main grid */
+.main { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 960px) { .main { grid-template-columns: minmax(0, 1fr) 300px; } }
+.side { display: grid; gap: 16px; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); padding: 14px 16px; min-width: 0; }
+.card h2 { font: 400 1.15rem var(--f-display); margin: 0 0 10px; }
+.lib { display: grid; gap: 8px; }
+.lib button { text-align: left; border: 1px solid var(--line); background: var(--soft); border-radius: 10px; padding: 9px 11px; display: grid; gap: 3px; }
+.lib button:hover { border-color: var(--accent); }
+.lib button.current { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.lib .t { font-weight: 700; font-size: .9rem; line-height: 1.3; }
+.lib .m { display: flex; gap: 5px; align-items: center; font-size: .74rem; color: var(--muted); }
+.lib.dim button.off { opacity: .55; }
+.trail { display: flex; flex-wrap: wrap; gap: 4px 2px; align-items: center; font-size: .84rem; }
+.trail button { border: 0; background: none; color: var(--accent); padding: 2px 4px; border-radius: 5px; text-align: left; }
+.trail button:hover { background: var(--soft); }
+.trail .sep { color: var(--muted); }
+.empty { color: var(--muted); font-size: .86rem; margin: 0; }
+
+/* lesson sheet */
+.sheet { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); padding: 22px clamp(16px, 4vw, 34px) 28px; min-width: 0; }
+.kicker { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.badge { font: 700 .66rem var(--f-ui); letter-spacing: .08em; text-transform: uppercase; border-radius: 999px; padding: 2px 8px; border: 1px solid currentColor; }
+.badge.cur { color: var(--accent); }
+.badge.gen { color: var(--muted); }
+.sheet h2.title { font: 400 clamp(1.5rem, 3.4vw, 2.2rem)/1.15 var(--f-display); margin: 8px 0 10px; text-wrap: balance; }
+.summary { font: 1.08rem/1.6 var(--f-text); margin: 0 0 18px; max-width: 68ch; }
+.sheet h3 { font: 400 1.25rem var(--f-display); margin: 26px 0 10px; display: flex; align-items: center; gap: 9px; }
+.sheet h4 { font: 700 .74rem var(--f-ui); text-transform: uppercase; letter-spacing: .09em; color: var(--muted); margin: 18px 0 8px; }
+.overview { font: 1rem/1.6 var(--f-text); margin: 0 0 6px; max-width: 70ch; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 22px 0 0; border-bottom: 1px solid var(--line); }
+.tabs button { border: 1px solid transparent; border-bottom: 0; background: none; padding: 7px 12px; border-radius: 8px 8px 0 0; display: inline-flex; align-items: center; gap: 7px; color: var(--muted); margin-bottom: -1px; }
+.tabs button[aria-selected="true"] { background: var(--paper); border-color: var(--line); color: var(--ink); font-weight: 700; }
+
+/* tables */
+.tw { overflow-x: auto; margin: 0 0 12px; border: 1px solid var(--line); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+caption { text-align: left; font: 700 .82rem var(--f-ui); padding: 9px 12px 7px; color: var(--ink); background: var(--soft); border-bottom: 1px solid var(--line); }
+th, td { padding: 7px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+tr:last-child > * { border-bottom: 0; }
+thead th { font: 700 .76rem var(--f-ui); color: var(--muted); white-space: nowrap; }
+tbody th { font-weight: 400; color: var(--muted); font-size: .84rem; min-width: 110px; }
+td { font-family: var(--f-text); }
+td.form { white-space: nowrap; }
+table.matrix tbody th { color: var(--ink); font-weight: 700; font-family: var(--f-ui); }
+table.matrix td { font-size: .9rem; min-width: 150px; }
+table.matrix thead th { color: var(--ink); }
+
+/* interlinear examples */
+.exs { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; counter-reset: ex; }
+.ex { counter-increment: ex; display: grid; grid-template-columns: 2.2em minmax(0, 1fr); gap: 0 6px; padding: 10px 12px 10px 6px; border-radius: 10px; background: var(--soft); }
+.ex::before { content: "(" counter(ex) ")"; color: var(--muted); font: .82rem var(--f-mono); padding-top: 3px; text-align: right; }
+.ilg { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: flex-start; }
+.wd { display: grid; gap: 1px; }
+.wd .w { font: 1.06rem var(--f-text); }
+.wd .g { font: .74rem var(--f-mono); color: var(--muted); }
+.wd .g .gl { font-variant: small-caps; text-transform: lowercase; letter-spacing: .04em; color: var(--accent); }
+.tr { grid-column: 2; font: italic .96rem var(--f-text); margin-top: 4px; }
+.tr::before { content: "‘"; } .tr::after { content: "’"; }
+.exnote { grid-column: 2; font-size: .84rem; color: var(--muted); margin-top: 2px; }
+.say { grid-column: 2; justify-self: start; margin-top: 4px; border: 0; background: none; color: var(--accent); font-size: .78rem; padding: 0; }
+.pit { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.pit li { position: relative; padding-left: 26px; font: .95rem/1.5 var(--f-text); }
+.pit li::before { content: "!"; position: absolute; left: 0; top: 1px; width: 18px; height: 18px; border-radius: 50%; background: var(--red); color: var(--paper); font: 700 .74rem/18px var(--f-ui); text-align: center; }
+.contrasts { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.contrast { border-left: 3px solid var(--accent); padding: 2px 0 2px 12px; }
+.contrast b { display: block; font-size: .92rem; }
+.contrast span { font: .93rem/1.5 var(--f-text); }
+.mnemonic { margin: 22px 0 0; padding: 12px 14px; border-radius: 10px; background: var(--marker); color: var(--marker-ink); font: 1rem/1.5 var(--f-text); }
+.mnemonic::before { content: "Remember · "; font: 700 .72rem var(--f-ui); letter-spacing: .08em; text-transform: uppercase; }
+.related { display: flex; flex-wrap: wrap; gap: 8px; }
+.rel { border: 1px solid var(--line); background: var(--paper); border-radius: 10px; padding: 7px 11px; text-align: left; display: grid; gap: 2px; max-width: 280px; }
+.rel:hover { border-color: var(--accent); }
+.rel b { font-size: .9rem; display: flex; gap: 6px; align-items: center; }
+.rel span { font-size: .8rem; color: var(--muted); }
+
+/* practice, check, ask */
+.panel { margin-top: 26px; padding-top: 4px; border-top: 2px solid var(--ink); }
+.panel h3 { margin-top: 16px; }
+.drill { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.q { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; gap: 8px; }
+.q .qt { display: flex; gap: 8px; align-items: baseline; font: 1rem var(--f-text); }
+.opts { display: flex; flex-wrap: wrap; gap: 6px; }
+.opt { border: 1px solid var(--line); background: var(--soft); border-radius: 8px; padding: 5px 12px; font: .95rem var(--f-text); }
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt.right { border-color: var(--ok); background: color-mix(in oklab, var(--ok) 16%, var(--paper)); }
+.opt.wrong { border-color: var(--red); background: color-mix(in oklab, var(--red) 14%, var(--paper)); text-decoration: line-through; }
+.opt:disabled { cursor: default; }
+.typed { display: flex; gap: 6px; flex-wrap: wrap; }
+.typed input { flex: 1 1 160px; }
+.fb { font-size: .9rem; }
+.fb.right { color: var(--ok); } .fb.wrong { color: var(--red); }
+.score { font: 700 .86rem var(--f-ui); color: var(--muted); }
+.check { display: grid; gap: 8px; }
+.check textarea { width: 100%; min-height: 64px; resize: vertical; font: 1rem var(--f-text); }
+.verdict { border-radius: 10px; padding: 10px 12px; display: grid; gap: 6px; background: var(--soft); }
+.verdict .v { font: 700 .8rem var(--f-ui); text-transform: uppercase; letter-spacing: .08em; }
+.verdict.correct .v { color: var(--ok); } .verdict.almost .v { color: var(--sv); } .verdict.wrong .v { color: var(--red); }
+.thread { display: grid; gap: 10px; margin-bottom: 10px; }
+.msg { padding: 9px 12px; border-radius: 12px; max-width: 92%; font: .97rem/1.55 var(--f-text); white-space: pre-wrap; }
+.msg.me { justify-self: end; background: var(--accent); color: var(--on-accent); border-bottom-right-radius: 4px; font-family: var(--f-ui); }
+.msg.t { justify-self: start; background: var(--soft); border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+.msg.t .exs { margin-top: 8px; }
+.askrow { display: flex; gap: 8px; }
+.askrow input { flex: 1; }
+
+/* welcome + loading */
+.welcome p { font: 1.04rem/1.6 var(--f-text); max-width: 64ch; }
+.feature-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 14px; }
+.feature-grid button { text-align: left; align-content: start; border: 1px solid var(--line); background: var(--soft); border-radius: 12px; padding: 12px 14px; display: grid; gap: 4px; }
+.feature-grid button:hover { border-color: var(--accent); }
+.feature-grid b { font: 400 1.05rem var(--f-display); }
+.feature-grid span { font-size: .85rem; color: var(--muted); }
+.loading { display: grid; gap: 12px; }
+.bar { height: 14px; border-radius: 6px; background: linear-gradient(90deg, var(--soft), var(--line), var(--soft)); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+@keyframes shimmer { to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .bar { animation: none; } }
+
+dialog { border: 1px solid var(--line); border-radius: 14px; background: var(--paper); color: var(--ink); max-width: min(520px, calc(100vw - 32px)); padding: 18px 20px; box-shadow: var(--shadow); }
+dialog::backdrop { background: rgb(0 0 0 / .35); }
+dialog h2 { font: 400 1.3rem var(--f-display); margin: 0 0 8px; }
+dialog p, dialog li { font-size: .92rem; }
+dialog .row { justify-content: flex-end; margin-top: 12px; }
+#keyField { width: 100%; }
+footer { color: var(--muted); font-size: .8rem; text-align: center; }
+footer a { color: inherit; }
+@media (max-width: 600px) {
+  .lbl { min-width: 100%; }
+  .brand p { display: none; }
+  #langInput { width: 100%; }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand"><h1>Taal <b>Teacher</b></h1><p>Grammar explained, compared and practised, in any language.</p></div>
+    <button class="meter" id="meter" type="button" hidden></button>
+    <button class="ghost" id="keyBtn" type="button" hidden>API key</button>
+    <button class="ghost icon" id="themeBtn" type="button" title="Light or dark" aria-label="Switch light or dark"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg></button>
+    <button class="ghost icon" id="helpBtn" type="button" title="How it works" aria-label="How it works">?</button>
+  </header>
+
+  <section class="studio" aria-label="What to learn">
+    <div class="row">
+      <span class="lbl" id="langsLbl">Languages</span>
+      <div class="chips" id="langChips" aria-labelledby="langsLbl"></div>
+      <input class="field" id="langInput" list="langList" placeholder="Add a language…" autocomplete="off" aria-label="Add a language">
+      <datalist id="langList"></datalist>
+    </div>
+    <div class="row">
+      <label class="lbl" for="featureInput">Feature</label>
+      <input class="field" id="featureInput" list="featureList" placeholder="e.g. demonstratives, aspect, noun cases" autocomplete="off" maxlength="120">
+      <datalist id="featureList"></datalist>
+      <button class="ghost" id="suggestBtn" type="button" title="Ask for features worth studying in these languages">Suggest topics</button>
+    </div>
+    <div class="suggestions" id="suggestions" hidden></div>
+    <div class="row">
+      <label class="lbl" for="focusInput">Focus</label>
+      <input class="field" id="focusInput" placeholder="optional: anything in particular, e.g. colloquial forms, history" maxlength="300" autocomplete="off">
+    </div>
+    <div class="row">
+      <span class="lbl">Level</span>
+      <div class="seg" id="levelSeg" role="group" aria-label="Level">
+        <button type="button" data-v="beginner">Beginner</button><button type="button" data-v="intermediate">Intermediate</button><button type="button" data-v="advanced">Advanced</button>
+      </div>
+      <label class="lbl" for="baseSel" style="min-width:auto;margin-left:8px">Explain in</label>
+      <select class="field" id="baseSel"></select>
+    </div>
+    <div class="go">
+      <div class="status spacer" id="status" role="status" aria-live="polite"></div>
+      <button class="ghost" id="stopBtn" type="button" hidden>Stop</button>
+      <button class="btn" id="teachBtn" type="button">Teach me</button>
+    </div>
+  </section>
+
+  <div class="main">
+    <main class="sheet" id="sheet" aria-live="polite"></main>
+    <aside class="side">
+      <section class="card">
+        <h2>Library</h2>
+        <div class="lib" id="lib"></div>
+      </section>
+      <section class="card">
+        <h2>Trail</h2>
+        <div class="trail" id="trail"></div>
+      </section>
+    </aside>
+  </div>
+  <footer>Curated lessons are checked by hand. Lessons made on request are written by Claude, and can contain mistakes.</footer>
+</div>
+
+<dialog id="keyDlg">
+  <form method="dialog">
+    <h2>Use your own API key</h2>
+    <p>With an Anthropic API key, your browser talks to Claude directly and the free daily allowance no longer applies. The key never reaches this server.</p>
+    <input class="field" id="keyField" type="password" placeholder="sk-ant-…" autocomplete="off" spellcheck="false">
+    <label style="display:flex;gap:8px;align-items:center;margin-top:10px;font-size:.9rem"><input type="checkbox" id="keyRemember"> Remember on this device</label>
+    <div class="row">
+      <button class="ghost" value="clear" id="keyClear">Forget key</button>
+      <button class="ghost" value="cancel">Cancel</button>
+      <button class="btn" value="save" id="keySave">Use this key</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="helpDlg">
+  <form method="dialog">
+    <h2>How Taal Teacher works</h2>
+    <ul>
+      <li>Pick one language to learn a feature, or several to compare them side by side.</li>
+      <li>Type any grammatical feature, or press <b>Suggest topics</b> for ideas that suit your languages.</li>
+      <li>Each lesson has paradigm tables, glossed examples (word by word), typical mistakes and practice.</li>
+      <li>Write your own sentence under <b>Try it yourself</b> to have it checked, or ask the teacher a follow-up.</li>
+      <li>The <b>Library</b> holds hand-checked lessons that work without any connection to Claude.</li>
+    </ul>
+    <p id="helpMode"></p>
+    <div class="row"><button class="btn" value="ok">Got it</button></div>
+  </form>
+</dialog>
+
+<script type="application/json" id="lessons">__LESSONS__</script>
+<script type="application/json" id="teacher-prompts">
+{
+ "lesson": {
+  "maxTokens": 6000,
+  "shared": true,
+  "text": [
+   "You are an expert linguist and an inspiring language teacher. Teach the grammatical feature \"{{feature}}\" in: {{langs}}. Level: {{level}}.",
+   "Write every explanation, label, gloss meaning and translation in {{base}}. Write example sentences and forms in the language being taught.",
+   "{{focus_block}}",
+   "Return ONLY a JSON object of this shape:",
+   "{\"title\":\"...\",\"summary\":\"...\",\"matrix\":{\"title\":\"...\",\"cols\":[\"...\"],\"rows\":[{\"label\":\"...\",\"cells\":[\"...\"]}]},\"sections\":[{\"lang\":\"code\",\"name\":\"English name\",\"overview\":\"...\",\"tables\":[{\"title\":\"...\",\"cols\":[\"...\"],\"rows\":[{\"label\":\"...\",\"cells\":[\"...\"]}]}],\"examples\":[{\"words\":[{\"w\":\"word\",\"g\":\"gloss\"}],\"translation\":\"...\",\"note\":\"...\"}],\"pitfalls\":[\"...\"]}],\"contrasts\":[{\"point\":\"...\",\"detail\":\"...\"}],\"mnemonic\":\"...\",\"related\":[{\"feature\":\"...\",\"langs\":[\"code\"],\"why\":\"...\"}],\"drill\":[{\"q\":\"...\",\"lang\":\"code\",\"options\":[\"...\"],\"answer\":\"...\",\"accept\":[\"...\"],\"explain\":\"...\"}]}",
+   "",
+   "Rules:",
+   "- Accuracy comes first. Only give forms, rules and examples you are certain of. If the feature does not exist in a language or works very differently there, say so in that section's overview and show how the same meaning is expressed instead.",
+   "- title: short and specific. summary: 2 or 3 sentences giving the big picture.",
+   "- sections: one per language, in the order given, with lang exactly the code given. overview: 2 to 4 sentences on how the feature works. tables: 1 to 3 paradigm tables of real forms; every row has exactly one cell per column, \"\" for a gap. examples: 3 to 5 natural sentences, simple first. words splits the sentence into words (punctuation stays on its word); g is a Leipzig-style interlinear gloss: the meaning in {{base}} plus grammatical labels in capitals (DEF, PL, ACC, GEN, 3SG, PST…) joined with . or -. note: under 20 words, or \"\". pitfalls: 2 or 3 typical learner mistakes.",
+   "- With more than one language: matrix compares them in 4 to 6 rows (for example forms, position, agreement, when it is obligatory, special uses), one column per language in the order given, cols are the language names; contrasts: 2 to 4 sharp observations across the languages. With one language: no matrix, and contrasts is [].",
+   "- mnemonic: one memorable line, or \"\".",
+   "- related: 3 to 5 neighbouring features worth learning next, with the language codes they apply to.",
+   "- drill: 4 to 6 practice items, easy first, spread over the languages. q is a short task, usually a gap ___ to fill or a choice, with the needed hint in brackets. options: 3 or 4 choices including the answer, or [] for a typed answer. accept: other correct answers for a typed answer. explain: one sentence.",
+   "- Level {{level}}: beginner means core forms and everyday sentences; intermediate adds irregular forms and finer rules; advanced may cover register, exceptions, dialects and history.",
+   "- Valid JSON only: write quotation marks inside text as typographic quotes (“ ” „ « ») or escape them as \\\", no comments, no trailing commas, nothing after the closing brace."
+  ]
+ },
+ "suggest": {
+  "maxTokens": 1200,
+  "shared": true,
+  "text": [
+   "A learner at {{level}} level studies {{langs}}. Suggest 8 grammatical features that are especially worth studying in these languages: characteristic, tricky for learners, or interesting to compare between them.",
+   "Write in {{base}}.",
+   "Return ONLY a JSON object: {\"features\":[{\"feature\":\"1 to 4 words\",\"why\":\"under 14 words\"}]}",
+   "- Valid JSON only: no comments, no trailing commas, nothing after the closing brace."
+  ]
+ },
+ "drill": {
+  "maxTokens": 2400,
+  "text": [
+   "Write 5 new practice exercises on \"{{feature}}\" in {{langs}} for a {{level}} learner. Explanations in {{base}}.",
+   "Do not repeat these earlier tasks: {{avoid}}",
+   "Return ONLY a JSON object: {\"items\":[{\"q\":\"...\",\"lang\":\"code\",\"options\":[\"...\"],\"answer\":\"...\",\"accept\":[\"...\"],\"explain\":\"...\"}]}",
+   "- q is a short task, usually a gap ___ to fill or a choice, with the needed hint in brackets. Mix multiple choice (3 or 4 options including the answer) and typed answers (options []). accept: other correct answers. explain: one sentence. Easy first.",
+   "- Spread the items over the languages, with lang exactly one of the given codes. Only use forms you are certain of.",
+   "- Valid JSON only: write quotation marks inside text as typographic quotes (“ ” „ « ») or escape them as \\\", no comments, no trailing commas, nothing after the closing brace."
+  ]
+ },
+ "check": {
+  "maxTokens": 1600,
+  "text": [
+   "A {{level}} learner of {{lang}} practising \"{{feature}}\" wrote this sentence:",
+   "\"\"\"",
+   "{{sentence}}",
+   "\"\"\"",
+   "Check it like a kind but exact teacher. Write explanations in {{base}}.",
+   "Return ONLY a JSON object: {\"verdict\":\"correct|almost|wrong\",\"corrected\":\"...\",\"explain\":\"...\",\"words\":[{\"w\":\"word\",\"g\":\"gloss\"}],\"translation\":\"...\"}",
+   "- verdict: correct if it is fine (valid regional or informal variants count as correct), almost for small slips, wrong otherwise.",
+   "- corrected: the sentence with the smallest changes that make it correct and natural; the same sentence if it is correct.",
+   "- explain: 1 to 3 sentences, first about {{feature}}, then about anything else that was wrong. Mention what the learner did well.",
+   "- words: the corrected sentence word by word with Leipzig-style glosses (meaning in {{base}} plus labels like DEF, PL, ACC, 3SG). translation: in {{base}}.",
+   "- If the text is not in {{lang}} or not a sentence, say so in explain and set verdict to wrong.",
+   "- Valid JSON only: write quotation marks inside text as typographic quotes (“ ” „ « ») or escape them as \\\", no comments, no trailing commas, nothing after the closing brace."
+  ]
+ },
+ "ask": {
+  "maxTokens": 2000,
+  "text": [
+   "You are a patient, precise language teacher. The learner is studying this lesson:",
+   "\"\"\"",
+   "{{lesson_ctx}}",
+   "\"\"\"",
+   "{{hist_block}}Learner: {{question}}",
+   "",
+   "Answer in {{base}}.",
+   "Return ONLY a JSON object: {\"reply\":\"...\",\"examples\":[{\"words\":[{\"w\":\"word\",\"g\":\"gloss\"}],\"translation\":\"...\",\"note\":\"...\"}],\"related\":[{\"feature\":\"...\",\"langs\":[\"code\"],\"why\":\"...\"}]}",
+   "- reply: under 150 words, plain text, concrete. Only state what you are sure of; say so when usage varies.",
+   "- examples: 0 to 3 example sentences glossed word by word (Leipzig-style), when they help. related: 0 to 2 features worth a lesson of their own.",
+   "- If the question is not about language, answer briefly and steer back to the lesson.",
+   "- Valid JSON only: write quotation marks inside text as typographic quotes (“ ” „ « ») or escape them as \\\", no comments, no trailing commas, nothing after the closing brace."
+  ]
+ }
+}
+</script>
+<script>
+(() => {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+    del(k) { try { localStorage.removeItem(k); } catch {} },
+  };
+
+  /* ---------- small DOM helper: text only, never HTML from data ---------- */
+  function h(tag, attrs, ...kids) {
+    const e = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) {
+      if (v == null || v === false) continue;
+      if (k === "class") e.className = v;
+      else if (k === "style") e.style.cssText = v;
+      else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
+      else e.setAttribute(k, v === true ? "" : v);
+    }
+    for (const kid of kids.flat(Infinity)) if (kid != null && kid !== false) e.append(kid instanceof Node ? kid : String(kid));
+    return e;
+  }
+  const str = (v, max = 4000) => (typeof v === "string" ? v : v == null ? "" : String(v)).slice(0, max);
+  const arr = (v, max = 50) => (Array.isArray(v) ? v.slice(0, max) : []);
+
+  /* ---------- languages ---------- */
+  const LANGS = [
+    ["ro", "Romanian"], ["hu", "Hungarian"], ["fi", "Finnish"], ["sv", "Swedish"], ["gd", "Scottish Gaelic"],
+    ["de", "German"], ["nl", "Dutch"], ["en", "English"], ["fr", "French"], ["es", "Spanish"], ["it", "Italian"], ["pt", "Portuguese"],
+    ["ca", "Catalan"], ["la", "Latin"], ["da", "Danish"], ["nb", "Norwegian"], ["is", "Icelandic"], ["ga", "Irish"], ["cy", "Welsh"],
+    ["pl", "Polish"], ["cs", "Czech"], ["sk", "Slovak"], ["sl", "Slovene"], ["hr", "Croatian"], ["sr", "Serbian"], ["bg", "Bulgarian"],
+    ["ru", "Russian"], ["uk", "Ukrainian"], ["lt", "Lithuanian"], ["lv", "Latvian"], ["et", "Estonian"], ["el", "Greek"], ["sq", "Albanian"],
+    ["eu", "Basque"], ["tr", "Turkish"], ["ka", "Georgian"], ["hy", "Armenian"], ["ar", "Arabic"], ["he", "Hebrew"], ["fa", "Persian"],
+    ["hi", "Hindi"], ["ja", "Japanese"], ["ko", "Korean"], ["zh", "Mandarin Chinese"], ["id", "Indonesian"], ["sw", "Swahili"], ["eo", "Esperanto"],
+  ];
+  const NAME = new Map(LANGS);
+  const CODE = new Map(LANGS.map(([c, n]) => [n.toLowerCase(), c]));
+  const KNOWN_COLORS = new Set(["ro", "hu", "fi", "sv", "gd"]);
+  function langColor(code) {
+    if (KNOWN_COLORS.has(code)) return `var(--${code})`;
+    let x = 0; for (const ch of code) x = (x * 31 + ch.charCodeAt(0)) >>> 0;
+    return `hsl(${x % 360} 55% 48%)`;
+  }
+  const langName = (code) => NAME.get(code) || lessonLangName(code) || code;
+  const dot = (code) => h("span", { class: "dot", style: `--c:${langColor(code)}`, "aria-hidden": "true" });
+
+  const FEATURES = ["Demonstratives", "Definite and indefinite articles", "Noun cases", "Grammatical gender and agreement", "Plural formation",
+    "Personal pronouns", "Clitic pronouns", "Possession", "Verb tenses", "Verbal aspect", "Subjunctive and conditional", "Imperative",
+    "Negation", "Yes/no and wh-questions", "Word order", "Prepositions and postpositions", "Comparison of adjectives", "Numerals and counting",
+    "Relative clauses", "Passive voice", "Reflexive verbs", "Vowel harmony", "Consonant gradation", "Initial mutations", "Evidentiality",
+    "Politeness and formality", "Definite conjugation", "Existential 'there is'", "Modal verbs", "Verbal prefixes and particles"];
+  const BASES = [["English", "English"], ["German", "Deutsch"], ["Dutch", "Nederlands"], ["French", "Français"], ["Spanish", "Español"],
+    ["Romanian", "Română"], ["Hungarian", "Magyar"], ["Finnish", "Suomi"], ["Swedish", "Svenska"], ["Italian", "Italiano"], ["Polish", "Polski"], ["Portuguese", "Português"]];
+
+  /* ---------- curated library ---------- */
+  let LIB = { languages: {}, lessons: [] };
+  try { LIB = JSON.parse($("lessons").textContent); } catch { /* page opened without its build step */ }
+  const CURATED = new Map(LIB.lessons.map((l) => [l.id, l]));
+  function lessonLangName(code) { return LIB.languages && LIB.languages[code]; }
+
+  /* ---------- state ---------- */
+  const state = {
+    langs: arr(store.get("tt-langs", ["ro"]), 8).filter((c) => typeof c === "string"),
+    level: store.get("tt-level", "beginner"),
+    base: store.get("tt-base", "English"),
+    trail: arr(store.get("tt-trail", []), 24),
+    lesson: null, meta: null, tab: 0, chat: [], drillSeen: [], busy: null,
+  };
+  if (!["beginner", "intermediate", "advanced"].includes(state.level)) state.level = "beginner";
+  const custom = new Map(arr(store.get("tt-custom-langs", []), 20).filter((x) => Array.isArray(x) && x.length === 2));
+  for (const [c, n] of custom) if (!NAME.has(c)) NAME.set(c, n);
+
+  /* ---------- Claude: inside Claude, this site's server, or the visitor's own key (as in Taal Writer) ---------- */
+  const PROMPTS = JSON.parse($("teacher-prompts").textContent);
+  const fill = (kind, vars) => PROMPTS[kind].text.join("\n").replace(/\{\{(\w+)\}\}/g, (_, k) => String(vars[k] ?? ""));
+  const MODEL = "claude-sonnet-5-5";
+  const ai = { mode: null, sample: null, hosted: null, key: null, calls: 0, tokens: 0, quota: null };
+
+  // Reads JSON tolerantly, and rescues an answer that was cut off: the complete parts are kept.
+  function salvageJson(raw) {
+    let txt = String(raw || "").replace(/```(?:json)?/gi, "").trim();
+    const start = txt.search(/[[{]/);
+    if (start < 0) return null;
+    txt = txt.slice(start);
+    const tryParse = (x) => { try { return JSON.parse(x); } catch { return undefined; } };
+    let v = tryParse(txt);
+    if (v !== undefined) return v;
+    const last = Math.max(txt.lastIndexOf("}"), txt.lastIndexOf("]"));
+    if (last > 0 && (v = tryParse(txt.slice(0, last + 1))) !== undefined) return v;
+    if ((v = tryParse(txt.replace(/,\s*([}\]])/g, "$1"))) !== undefined) return v;
+    const closeUp = (x) => {
+      const stack = []; let inStr = false, esc = false;
+      for (const ch of x) {
+        if (inStr) { if (esc) esc = false; else if (ch === "\\") esc = true; else if (ch === '"') inStr = false; continue; }
+        if (ch === '"') inStr = true;
+        else if (ch === "{") stack.push("}"); else if (ch === "[") stack.push("]");
+        else if (ch === "}" || ch === "]") stack.pop();
+      }
+      return inStr ? null : x.replace(/[,:\s]+$/, "") + stack.reverse().join("");
+    };
+    let k = txt.length;
+    for (let tries = 0; tries < 400 && k > 0; tries++) {
+      k = Math.max(txt.lastIndexOf(",", k - 1), txt.lastIndexOf("}", k - 1), txt.lastIndexOf("]", k - 1));
+      if (k <= 0) break;
+      const cut = closeUp(txt[k] === "," ? txt.slice(0, k) : txt.slice(0, k + 1));
+      if (cut && (v = tryParse(cut)) !== undefined) return v;
+    }
+    return null;
+  }
+  const netErr = (e) => (e && e.name === "AbortError" ? { code: "cancelled" } : { code: "network" });
+
+  async function aiJson(kind, vars, { signal } = {}) {
+    if (ai.mode === "claude") {
+      ai.calls++; renderMeter();
+      try {
+        return await ai.sample.json(fill(kind, vars), { model: MODEL, modelTier: "default", signal });
+      } catch (e) {
+        if (e && e.code === "invalid_json" && e.text) { const v = salvageJson(e.text); if (v && typeof v === "object") return v; }
+        throw e;
+      }
+    }
+    if (ai.mode === "byok") {
+      let room = PROMPTS[kind].maxTokens;
+      for (let attempt = 0; attempt < 2; attempt++) {
+        let res;
+        try {
+          res = await fetch("https://api.anthropic.com/v1/messages", {
+            method: "POST", signal,
+            headers: { "content-type": "application/json", "x-api-key": ai.key, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
+            body: JSON.stringify({
+              model: MODEL, max_tokens: room,
+              tools: [{ name: "respond", description: "Give your answer: a JSON object exactly as the instructions describe.", input_schema: { type: "object", additionalProperties: true } }],
+              tool_choice: { type: "tool", name: "respond" },
+              messages: [{ role: "user", content: fill(kind, vars) }],
+            }),
+          });
+        } catch (e) { throw netErr(e); }
+        const j = await res.json().catch(() => null);
+        if (!res.ok) throw { code: res.status === 401 || res.status === 403 ? "bad_key" : res.status === 429 || res.status === 529 ? "rate_limited" : "upstream", message: j && j.error && j.error.message };
+        const u = (j && j.usage) || {};
+        ai.calls++; ai.tokens += (u.input_tokens || 0) + (u.output_tokens || 0); renderMeter();
+        const parts = (j && j.content) || [];
+        const tool = parts.find((c) => c.type === "tool_use" && c.input && Object.keys(c.input).length);
+        const data = tool ? tool.input : salvageJson(parts.filter((c) => c.type === "text").map((c) => c.text).join(""));
+        const cutOff = j && j.stop_reason === "max_tokens";
+        if (data && (!cutOff || attempt === 1)) return data;
+        if (!cutOff) break;
+        room = Math.min(room * 2, 8000);
+      }
+      throw { code: "invalid_json" };
+    }
+    if (ai.mode === "hosted") {
+      let res;
+      try {
+        res = await fetch("/api/ask", { method: "POST", signal, headers: { "content-type": "application/json", "x-teacher": "1" }, body: JSON.stringify({ kind, vars }) });
+      } catch (e) { throw netErr(e); }
+      const j = await res.json().catch(() => null);
+      if (j && j.quota) ai.quota = j.quota;
+      if (!res.ok) { renderMeter(); throw { code: (j && j.code) || "upstream", message: j && j.message }; }
+      ai.calls++; renderMeter();
+      return j.data;
+    }
+    throw { code: "not_connected" };
+  }
+
+  const ERRORS = {
+    not_connected: "Claude isn't connected here. Add your own API key to make new lessons; the library works without one.",
+    quota: "Today's free allowance is used up. Add your own API key to carry on, or come back tomorrow.",
+    global_quota: "The free service has reached today's limit. Add your own API key to carry on.",
+    rate_limited: "Too many requests just now. Wait a moment and try again.",
+    bad_key: "That API key was refused. Check it under API key.",
+    invalid_json: "The answer came back garbled. Try again.",
+    prompt_too_large: "That's too long to send. Shorten the text.",
+    network: "No connection to Claude. Check your network.",
+    upstream: "Claude had a problem answering. Try again.",
+  };
+  function errText(e) { return ERRORS[e && e.code] || (e && e.message) || "Something went wrong."; }
+  function handleError(e) {
+    if (e && e.code === "cancelled") { setStatus(""); return; }
+    setStatus(errText(e), "err");
+    if (e && ["quota", "global_quota", "bad_key", "not_connected"].includes(e.code)) keyBtn.classList.add("nudge");
+    if (e && ["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"].includes(e.code)) { ai.sample = null; applyMode(); }
+  }
+
+  const keyBtn = $("keyBtn"), meterEl = $("meter");
+  const kfmt = (n) => (n >= 10000 ? Math.round(n / 1000) + "k" : n >= 1000 ? (n / 1000).toFixed(1) + "k" : String(n));
+  function renderMeter() {
+    let txt = "", title = "";
+    if (ai.mode === "claude") { txt = `${ai.calls} Claude calls`; title = "Using your own Claude plan"; }
+    else if (ai.mode === "byok") { txt = `${kfmt(ai.tokens)} tokens on your key`; title = "Tokens used with your API key in this session"; }
+    else if (ai.mode === "hosted" && ai.quota) {
+      const q = ai.quota, hrs = Math.max(1, Math.round(q.resetsIn / 3600));
+      txt = q.used >= q.limit ? "Free allowance used up" : `Free today: ${kfmt(q.used)} / ${kfmt(q.limit)}`;
+      title = `Free tokens per day; resets in about ${hrs} h. Lessons someone already asked for are free.`;
+      keyBtn.classList.toggle("nudge", q.used >= q.limit);
+    } else if (!ai.mode) { txt = "Library only"; title = "Add an API key to make new lessons"; }
+    meterEl.textContent = txt; meterEl.title = title; meterEl.hidden = !txt; meterEl.disabled = ai.mode !== null && ai.mode !== "hosted";
+  }
+  function loadKey() { try { return localStorage.getItem("tt-key") || sessionStorage.getItem("tt-key") || null; } catch { return null; } }
+  function saveKey(k, remember) {
+    try { localStorage.removeItem("tt-key"); sessionStorage.removeItem("tt-key"); if (k) (remember ? localStorage : sessionStorage).setItem("tt-key", k); } catch {}
+  }
+  function applyMode() {
+    ai.mode = ai.sample ? "claude" : ai.key ? "byok" : ai.hosted ? "hosted" : null;
+    keyBtn.hidden = ai.mode === "claude";
+    renderMeter(); renderStudio();
+    const modes = { claude: "New lessons use your own Claude plan.", byok: "New lessons use your API key, straight from your browser.", hosted: "New lessons use this site's free daily allowance; add your own API key for more.", null: "Claude isn't connected: the library works, and an API key unlocks new lessons." };
+    $("helpMode").textContent = modes[ai.mode];
+  }
+
+  /* ---------- status + busy ---------- */
+  const statusEl = $("status"), stopBtn = $("stopBtn");
+  function setStatus(text, kind) { statusEl.textContent = text || ""; statusEl.className = "status spacer" + (kind ? " " + kind : ""); }
+  async function run(label, fn) {
+    if (state.busy) state.busy.abort();
+    const ctl = new AbortController(); state.busy = ctl;
+    setStatus(label); stopBtn.hidden = false;
+    try { return await fn(ctl.signal); }
+    catch (e) { handleError(e); return null; }
+    finally { if (state.busy === ctl) { state.busy = null; stopBtn.hidden = true; if (statusEl.className.indexOf("err") < 0) setStatus(""); } }
+  }
+  stopBtn.addEventListener("click", () => { if (state.busy) state.busy.abort(); });
+
+  /* ---------- studio ---------- */
+  const langChips = $("langChips"), langInput = $("langInput"), featureInput = $("featureInput"), focusInput = $("focusInput");
+  $("langList").append(...LANGS.map(([c, n]) => h("option", { value: n })));
+  $("featureList").append(...FEATURES.map((f) => h("option", { value: f })));
+  $("baseSel").append(...BASES.map(([v, n]) => h("option", { value: v }, n)));
+  $("baseSel").value = BASES.some(([v]) => v === state.base) ? state.base : "English";
+
+  function addLang(raw) {
+    const t = String(raw || "").trim();
+    if (!t) return;
+    let code = CODE.get(t.toLowerCase()) || (NAME.has(t.toLowerCase()) ? t.toLowerCase() : null);
+    if (!code) {
+      // A language not in the list: keep its name, with a made-up code.
+      const name = t.replace(/\s+/g, " ").slice(0, 40);
+      code = "x-" + name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 20);
+      NAME.set(code, name); custom.set(code, name); store.set("tt-custom-langs", [...custom]);
+    }
+    if (!state.langs.includes(code) && state.langs.length < 6) state.langs.push(code);
+    saveStudio(); renderStudio();
+  }
+  langInput.addEventListener("change", () => { addLang(langInput.value); langInput.value = ""; });
+  langInput.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); addLang(langInput.value); langInput.value = ""; } });
+  for (const b of $("levelSeg").querySelectorAll("button")) b.addEventListener("click", () => { state.level = b.dataset.v; saveStudio(); renderStudio(); });
+  $("baseSel").addEventListener("change", (e) => { state.base = e.target.value; saveStudio(); });
+  featureInput.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); teach(); } });
+  function saveStudio() { store.set("tt-langs", state.langs); store.set("tt-level", state.level); store.set("tt-base", state.base); }
+
+  function renderStudio() {
+    langChips.replaceChildren(...state.langs.map((c) => h("span", { class: "chip" }, dot(c), langName(c),
+      h("button", { class: "x", type: "button", "aria-label": `Remove ${langName(c)}`, onclick: () => { state.langs = state.langs.filter((x) => x !== c); saveStudio(); renderStudio(); } }, "×"))));
+    if (!state.langs.length) langChips.append(h("span", { class: "empty" }, "No language yet"));
+    langInput.disabled = state.langs.length >= 6;
+    for (const b of $("levelSeg").querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.v === state.level));
+    const teachBtn = $("teachBtn");
+    teachBtn.textContent = state.langs.length > 1 ? `Compare ${state.langs.length} languages` : "Teach me";
+    teachBtn.disabled = !state.langs.length;
+    $("suggestBtn").disabled = !state.langs.length || !ai.mode;
+    renderLibrary();
+  }
+
+  /* ---------- curated match before asking Claude ---------- */
+  const norm = (s) => String(s || "").toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+  function findCurated(feature, langs) {
+    const f = norm(feature);
+    if (!f) return null;
+    const key = [...langs].sort().join(",");
+    return LIB.lessons.find((l) => [...l.langs].sort().join(",") === key && (norm(l.feature) === f || norm(l.feature).startsWith(f) || f.startsWith(norm(l.feature)))) || null;
+  }
+
+  const langsVar = (codes) => codes.map((c) => `${langName(c)} (${c})`).join(", ");
+  const focusBlock = () => (focusInput.value.trim() ? `- The learner especially wants: ${focusInput.value.trim().slice(0, 300)}\n` : "");
+
+  async function teach(opts = {}) {
+    const feature = (opts.feature ?? featureInput.value).trim();
+    const langs = opts.langs || state.langs.slice();
+    if (!langs.length) { setStatus("Add a language first.", "err"); langInput.focus(); return; }
+    if (!feature) { setStatus("Type a grammatical feature, or press Suggest topics.", "err"); featureInput.focus(); return; }
+    featureInput.value = feature;
+    const curated = !focusInput.value.trim() && findCurated(feature, langs);
+    if (curated) { openCurated(curated.id); return; }
+    if (!ai.mode) { handleError({ code: "not_connected" }); return; }
+    const vars = { langs: langsVar(langs), feature: feature.slice(0, 120), level: state.level, base: state.base, focus_block: focusBlock() };
+    showLoading(feature, langs);
+    const data = await run(langs.length > 1 ? "The teacher is preparing the comparison…" : "The teacher is preparing the lesson…", (signal) => aiJson("lesson", vars, { signal }));
+    if (!data) { if (!state.lesson) renderWelcome(); else renderLesson(); return; }
+    const lesson = normLesson(data, langs, feature);
+    if (!lesson.sections.length) { setStatus("That answer had no lesson in it. Try again.", "err"); if (state.lesson) renderLesson(); else renderWelcome(); return; }
+    showLesson(lesson, { source: "claude", feature, langs, level: state.level, base: state.base, focus: focusInput.value.trim() });
+  }
+  $("teachBtn").addEventListener("click", () => teach());
+
+  $("suggestBtn").addEventListener("click", async () => {
+    const box = $("suggestions");
+    const data = await run("Looking for good topics…", (signal) => aiJson("suggest", { langs: langsVar(state.langs), level: state.level, base: state.base }, { signal }));
+    if (!data) return;
+    const items = arr(data.features, 10).map((f) => ({ feature: str(f && f.feature, 60), why: str(f && f.why, 140) })).filter((f) => f.feature);
+    box.replaceChildren(...items.map((f) => h("button", { class: "sugg", type: "button", title: f.why, onclick: () => { featureInput.value = f.feature; teach(); } }, f.feature, f.why ? h("small", {}, " · " + f.why) : null)));
+    box.hidden = !items.length;
+  });
+
+  /* ---------- normalize lessons from Claude (or anywhere) ---------- */
+  function normTable(t) {
+    if (!t || typeof t !== "object") return null;
+    const cols = arr(t.cols, 8).map((c) => str(c, 60));
+    const rows = arr(t.rows, 24).map((r) => ({ label: str(r && r.label, 80), cells: arr(r && r.cells, 8).map((c) => str(c, 160)) }));
+    if (!cols.length || !rows.length) return null;
+    for (const r of rows) { while (r.cells.length < cols.length) r.cells.push(""); r.cells.length = cols.length; }
+    return { title: str(t.title, 120), cols, rows };
+  }
+  function normExample(e) {
+    if (!e || typeof e !== "object") return null;
+    const words = arr(e.words, 40).map((w) => ({ w: str(w && w.w, 60), g: str(w && w.g, 80) })).filter((w) => w.w);
+    if (!words.length) return null;
+    return { words, translation: str(e.translation, 300), note: str(e.note, 240) };
+  }
+  function normDrill(d, langs) {
+    if (!d || typeof d !== "object" || !str(d.q) || !str(d.answer)) return null;
+    const options = arr(d.options, 6).map((o) => str(o, 120)).filter(Boolean);
+    const answer = str(d.answer, 120);
+    if (options.length && !options.includes(answer)) options.push(answer);
+    return { q: str(d.q, 300), lang: langs.includes(d.lang) ? d.lang : langs[0], options, answer, accept: arr(d.accept, 6).map((a) => str(a, 120)), explain: str(d.explain, 300) };
+  }
+  function normRelated(r) {
+    if (!r || typeof r !== "object" || !str(r.feature)) return null;
+    return { id: CURATED.has(r.id) ? r.id : null, feature: str(r.feature, 80), langs: arr(r.langs, 6).map((c) => str(c, 24)).filter(Boolean), why: str(r.why, 200) };
+  }
+  function normLesson(d, langs, feature) {
+    d = d && typeof d === "object" ? d : {};
+    const sections = arr(d.sections, 8).map((s, i) => {
+      if (!s || typeof s !== "object") return null;
+      const lang = langs.includes(s.lang) ? s.lang : langs[i] || langs[0];
+      return { lang, name: langName(lang), overview: str(s.overview, 1600), tables: arr(s.tables, 4).map(normTable).filter(Boolean),
+        examples: arr(s.examples, 8).map(normExample).filter(Boolean), pitfalls: arr(s.pitfalls, 6).map((p) => str(p, 400)).filter(Boolean) };
+    }).filter(Boolean);
+    return {
+      feature, langs, title: str(d.title, 160) || feature, summary: str(d.summary, 1200),
+      matrix: langs.length > 1 ? normTable(d.matrix) : null, sections,
+      contrasts: arr(d.contrasts, 6).map((c) => c && { point: str(c.point, 120), detail: str(c.detail, 500) }).filter((c) => c && c.point),
+      mnemonic: str(d.mnemonic, 300), related: arr(d.related, 6).map(normRelated).filter(Boolean),
+      drill: arr(d.drill, 8).map((x) => normDrill(x, langs)).filter(Boolean),
+    };
+  }
+
+  /* ---------- showing lessons ---------- */
+  const sheet = $("sheet");
+  function openCurated(id, { fromTrail } = {}) {
+    const l = CURATED.get(id);
+    if (!l) return;
+    state.langs = l.langs.slice(); featureInput.value = l.feature; saveStudio(); renderStudio();
+    const lesson = normLesson(l, l.langs, l.feature);
+    showLesson(lesson, { source: "curated", id, feature: l.feature, langs: l.langs, level: l.level }, { fromTrail });
+  }
+  function showLesson(lesson, meta, { fromTrail } = {}) {
+    state.lesson = lesson; state.meta = meta; state.tab = 0; state.chat = []; state.drillSeen = lesson.drill.map((d) => d.q);
+    state.drill = lesson.drill.slice(); state.answers = new Map(); state.picked = new Map(); state.typed = new Map();
+    state.checkResult = null; state.checkDraft = "";
+    if (!fromTrail) addTrail(meta, lesson.title);
+    setHash(meta);
+    if (meta.source === "claude") rememberLesson(meta, lesson);
+    renderLesson(); renderLibrary();
+    sheet.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  }
+
+  function glossNode(g) {
+    // Grammatical labels (DEF, 3SG, PL…) in small caps; lexical meanings as they are.
+    const out = h("span", { class: "g" });
+    for (const part of g.split(/([.\-=:])/)) {
+      if (/^(?:[123](?:SG|PL|DU)?|[A-Z][A-Z0-9]+)$/.test(part)) out.append(h("span", { class: "gl" }, part));
+      else out.append(part);
+    }
+    return out;
+  }
+  const canSpeak = "speechSynthesis" in window;
+  function speak(text, code) {
+    try {
+      const u = new SpeechSynthesisUtterance(text);
+      if (!code.startsWith("x-")) u.lang = code;
+      speechSynthesis.cancel(); speechSynthesis.speak(u);
+    } catch {}
+  }
+  function exampleNode(e, lang) {
+    const sentence = e.words.map((w) => w.w).join(" ");
+    return h("li", { class: "ex" },
+      h("div", { class: "ilg", lang: lang && !lang.startsWith("x-") ? lang : null }, e.words.map((w) => h("span", { class: "wd" }, h("span", { class: "w" }, w.w), glossNode(w.g)))),
+      e.translation ? h("div", { class: "tr" }, e.translation) : null,
+      e.note ? h("div", { class: "exnote" }, e.note) : null,
+      canSpeak && lang ? h("button", { class: "say", type: "button", onclick: () => speak(sentence, lang), title: "Read aloud with your device's voice" }, "▸ listen") : null);
+  }
+  function tableNode(t, { matrix } = {}) {
+    return h("div", { class: "tw" }, h("table", { class: matrix ? "matrix" : null },
+      t.title ? h("caption", {}, t.title) : null,
+      h("thead", {}, h("tr", {}, h("th", {}, ""), t.cols.map((c) => h("th", { scope: "col" }, c)))),
+      h("tbody", {}, t.rows.map((r) => h("tr", {}, h("th", { scope: "row" }, r.label), r.cells.map((c) => h("td", { class: !matrix && c.length < 24 ? "form" : null }, c)))))));
+  }
+  function relatedNode(r) {
+    const curated = r.id && CURATED.get(r.id);
+    const langs = curated ? curated.langs : r.langs.filter((c) => NAME.has(c) || lessonLangName(c));
+    return h("button", { class: "rel", type: "button", onclick: () => {
+      if (curated) return openCurated(r.id);
+      if (langs.length) { state.langs = langs.slice(0, 6); saveStudio(); renderStudio(); }
+      teach({ feature: r.feature });
+    } }, h("b", {}, langs.map(dot), r.feature, curated ? h("span", { class: "badge cur", style: "font-size:.58rem" }, "library") : null), r.why ? h("span", {}, r.why) : null);
+  }
+
+  function sectionNode(s) {
+    return h("section", {},
+      h("h3", {}, dot(s.lang), s.name),
+      s.overview ? h("p", { class: "overview" }, s.overview) : null,
+      s.tables.length ? [h("h4", {}, "Forms"), s.tables.map((t) => tableNode(t))] : null,
+      s.examples.length ? [h("h4", {}, "Examples"), h("ol", { class: "exs" }, s.examples.map((e) => exampleNode(e, s.lang)))] : null,
+      s.pitfalls.length ? [h("h4", {}, "Watch out"), h("ul", { class: "pit" }, s.pitfalls.map((p) => h("li", {}, p)))] : null);
+  }
+
+  function renderLesson() {
+    const l = state.lesson, m = state.meta;
+    if (!l) return renderWelcome();
+    const multi = l.sections.length > 1;
+    const sel = Math.min(state.tab, l.sections.length - 1);
+    sheet.replaceChildren(...[
+      h("div", { class: "kicker" }, l.langs.map((c) => h("span", { style: "display:inline-flex;gap:5px;align-items:center" }, dot(c), langName(c))),
+        h("span", {}, "· " + l.feature), m.level ? h("span", {}, "· " + m.level) : null,
+        h("span", { class: "badge " + (m.source === "curated" ? "cur" : "gen"), title: m.source === "curated" ? "Checked by hand" : "Written by Claude for this request" }, m.source === "curated" ? "Library" : "Made by Claude")),
+      h("h2", { class: "title" }, l.title),
+      l.summary ? h("p", { class: "summary" }, l.summary) : null,
+      l.matrix ? [h("h4", {}, "Side by side"), tableNode(l.matrix, { matrix: true })] : null,
+      l.contrasts.length ? [h("h4", {}, "What to notice"), h("div", { class: "contrasts" }, l.contrasts.map((c) => h("div", { class: "contrast" }, h("b", {}, c.point), h("span", {}, c.detail))))] : null,
+      multi ? h("div", { class: "tabs", role: "tablist" }, l.sections.map((s, i) => h("button", { type: "button", role: "tab", "aria-selected": String(i === sel), onclick: () => { state.tab = i; renderLesson(); } }, dot(s.lang), s.name))) : null,
+      multi ? sectionNode(l.sections[sel]) : l.sections.map(sectionNode),
+      l.mnemonic ? h("p", { class: "mnemonic" }, l.mnemonic) : null,
+      l.related.length ? [h("h4", {}, "Where to next"), h("div", { class: "related" }, l.related.map(relatedNode))] : null,
+      practiceNode(), checkNode(), askNode()].flat(Infinity).filter(Boolean));
+  }
+
+  /* ---------- practice ---------- */
+  const fold = (s) => String(s || "").normalize("NFC").toLowerCase().replace(/[.!?¿¡,;:"“”„«»'’]/g, "").replace(/\s+/g, " ").trim();
+  function practiceNode() {
+    const items = state.drill;
+    const done = [...state.answers.values()];
+    const right = done.filter(Boolean).length;
+    const list = h("ol", { class: "drill" }, items.map((d, i) => {
+      const answered = state.answers.has(i), ok = state.answers.get(i);
+      const fb = answered ? h("div", { class: "fb " + (ok ? "right" : "wrong") }, ok ? "Right. " : `Answer: ${d.answer}. `, d.explain) : null;
+      const mark = (good) => { state.answers.set(i, good); renderLesson(); };
+      let body;
+      if (d.options.length) {
+        body = h("div", { class: "opts" }, d.options.map((o) => h("button", { class: "opt" + (answered ? (o === d.answer ? " right" : state.picked && state.picked.get(i) === o ? " wrong" : "") : ""), type: "button", disabled: answered,
+          lang: !d.lang.startsWith("x-") ? d.lang : null, onclick: () => { (state.picked ||= new Map()).set(i, o); mark(o === d.answer); } }, o)));
+      } else {
+        const inp = h("input", { class: "field", placeholder: "Your answer", autocomplete: "off", spellcheck: "false", lang: !d.lang.startsWith("x-") ? d.lang : null, disabled: answered, "aria-label": "Your answer" });
+        if (answered && state.typed) inp.value = state.typed.get(i) || "";
+        const submit = () => { if (!inp.value.trim()) return; (state.typed ||= new Map()).set(i, inp.value); mark([d.answer, ...d.accept].some((a) => fold(a) === fold(inp.value))); };
+        inp.addEventListener("keydown", (e) => { if (e.key === "Enter") submit(); });
+        body = h("div", { class: "typed" }, inp, answered ? null : h("button", { class: "ghost", type: "button", onclick: submit }, "Check"));
+      }
+      return h("li", { class: "q" }, h("div", { class: "qt" }, dot(d.lang), h("span", {}, d.q)), body, fb);
+    }));
+    return h("section", { class: "panel" },
+      h("h3", {}, "Practice"),
+      items.length ? h("div", { class: "score" }, `${right} of ${done.length} right · ${items.length - done.length} to go`) : h("p", { class: "empty" }, "No exercises yet."),
+      list,
+      h("div", { class: "row", style: "margin-top:10px" }, h("button", { class: "ghost", type: "button", disabled: !ai.mode, title: ai.mode ? null : "Needs a Claude connection", onclick: moreDrill }, "More exercises")));
+  }
+  async function moreDrill() {
+    const l = state.lesson;
+    const data = await run("Writing new exercises…", (signal) => aiJson("drill", { langs: langsVar(l.langs), feature: l.feature, level: state.meta.level || state.level, base: state.base, avoid: state.drillSeen.join(" | ").slice(-1400) }, { signal }));
+    if (!data) return;
+    const items = arr(data.items, 8).map((x) => normDrill(x, l.langs)).filter(Boolean);
+    state.drill.push(...items); state.drillSeen.push(...items.map((d) => d.q));
+    renderLesson();
+  }
+
+  /* ---------- try it yourself ---------- */
+  function checkNode() {
+    const l = state.lesson;
+    const sel = h("select", { class: "field", "aria-label": "Language of your sentence" }, l.langs.map((c) => h("option", { value: c }, langName(c))));
+    sel.value = state.checkLang && l.langs.includes(state.checkLang) ? state.checkLang : l.langs[Math.min(state.tab, l.langs.length - 1)];
+    sel.addEventListener("change", () => { state.checkLang = sel.value; });
+    const ta = h("textarea", { class: "field", placeholder: `Write a sentence that uses ${l.feature.toLowerCase()}…`, maxlength: "400", spellcheck: "false" });
+    ta.value = state.checkDraft || "";
+    ta.addEventListener("input", () => { state.checkDraft = ta.value; });
+    const out = h("div", {});
+    if (state.checkResult) out.append(verdictNode(state.checkResult));
+    const go = async () => {
+      if (!ta.value.trim()) return;
+      const lang = sel.value; state.checkLang = lang;
+      const data = await run("Checking your sentence…", (signal) => aiJson("check", { lang: langName(lang), feature: l.feature, sentence: ta.value.trim().slice(0, 400), level: state.meta.level || state.level, base: state.base }, { signal }));
+      if (!data) return;
+      state.checkResult = { verdict: ["correct", "almost", "wrong"].includes(data.verdict) ? data.verdict : "almost", corrected: str(data.corrected, 400), explain: str(data.explain, 800),
+        example: normExample({ words: data.words, translation: data.translation }), lang };
+      renderLesson();
+    };
+    return h("section", { class: "panel" }, h("h3", {}, "Try it yourself"),
+      h("div", { class: "check" }, h("div", { class: "row" }, sel, h("span", { class: "empty" }, "Write your own sentence and the teacher checks it.")), ta,
+        h("div", { class: "row" }, h("button", { class: "btn", type: "button", disabled: !ai.mode, title: ai.mode ? null : "Needs a Claude connection", onclick: go }, "Check my sentence")), out));
+  }
+  function verdictNode(r) {
+    const label = { correct: "Correct", almost: "Almost", wrong: "Not yet" }[r.verdict];
+    return h("div", { class: "verdict " + r.verdict }, h("span", { class: "v" }, label),
+      r.corrected ? h("div", { style: "font:1.05rem var(--f-text)" }, r.corrected) : null,
+      r.explain ? h("div", {}, r.explain) : null,
+      r.example ? h("ol", { class: "exs" }, exampleNode(r.example, r.lang)) : null);
+  }
+
+  /* ---------- ask the teacher ---------- */
+  function lessonContext(l) {
+    const lines = [`${l.title} (${l.langs.map(langName).join(", ")}; ${l.feature})`, l.summary];
+    for (const s of l.sections) lines.push(`${s.name}: ${s.overview}`);
+    if (l.matrix) for (const r of l.matrix.rows) lines.push(`${r.label}: ${r.cells.join(" | ")}`);
+    return lines.join("\n").slice(0, 3400);
+  }
+  function askNode() {
+    const thread = h("div", { class: "thread" }, state.chat.map((m) => m.role === "me" ? h("div", { class: "msg me" }, m.text)
+      : h("div", { class: "msg t" }, m.text, m.examples && m.examples.length ? h("ol", { class: "exs" }, m.examples.map((e) => exampleNode(e, null))) : null,
+        m.related && m.related.length ? h("div", { class: "related", style: "margin-top:8px" }, m.related.map(relatedNode)) : null)));
+    const inp = h("input", { class: "field", placeholder: ai.mode ? "Ask about this lesson…" : "Needs a Claude connection", maxlength: "500", disabled: !ai.mode, "aria-label": "Your question" });
+    const send = async () => {
+      const q = inp.value.trim(); if (!q) return;
+      const hist = state.chat.slice(-6).map((m) => `${m.role === "me" ? "Learner" : "Teacher"}: ${m.text}`).join("\n").slice(-2800);
+      state.chat.push({ role: "me", text: q }); renderLesson();
+      const data = await run("The teacher is thinking…", (signal) => aiJson("ask", { lesson_ctx: lessonContext(state.lesson), hist_block: hist ? hist + "\n" : "", question: q.slice(0, 500), base: state.base }, { signal }));
+      if (!data) { state.chat.pop(); renderLesson(); return; }
+      state.chat.push({ role: "t", text: str(data.reply, 1500), examples: arr(data.examples, 3).map(normExample).filter(Boolean), related: arr(data.related, 2).map(normRelated).filter(Boolean) });
+      renderLesson();
+      const again = sheet.querySelector(".askrow input"); if (again) again.focus();
+    };
+    inp.addEventListener("keydown", (e) => { if (e.key === "Enter") send(); });
+    return h("section", { class: "panel" }, h("h3", {}, "Ask the teacher"), thread,
+      h("div", { class: "askrow" }, inp, h("button", { class: "btn", type: "button", disabled: !ai.mode, onclick: send }, "Ask")));
+  }
+
+  /* ---------- welcome, loading ---------- */
+  function renderWelcome() {
+    const picks = LIB.lessons.slice(0, 6);
+    sheet.replaceChildren(h("div", { class: "welcome" },
+      h("div", { class: "kicker" }, "Welcome"),
+      h("h2", { class: "title" }, "What would you like to understand today?"),
+      h("p", {}, "Choose one or more languages above and name a grammatical feature: demonstratives in Romanian, aspect in Polish and Russian, cases in Finnish and Hungarian. You get the forms, word-by-word glossed examples, the usual traps, a comparison when there are several languages, and exercises."),
+      picks.length ? [h("h4", {}, "Start with a lesson from the library"),
+        h("div", { class: "feature-grid" }, picks.map((l) => h("button", { type: "button", onclick: () => openCurated(l.id) },
+          h("span", { style: "display:flex;gap:4px" }, l.langs.map(dot)), h("b", {}, l.title), h("span", {}, l.summary.split(". ")[0].replace(/\.?$/, ".")))))] : null));
+  }
+  function showLoading(feature, langs) {
+    sheet.replaceChildren(h("div", { class: "loading" },
+      h("div", { class: "kicker" }, langs.map((c) => h("span", { style: "display:inline-flex;gap:5px;align-items:center" }, dot(c), langName(c))), h("span", {}, "· " + feature)),
+      h("h2", { class: "title" }, langs.length > 1 ? `Comparing ${feature.toLowerCase()}…` : `Preparing ${feature.toLowerCase()}…`),
+      h("p", { class: "empty" }, langs.length > 2 ? "Comparisons across several languages take a little longer." : "This usually takes a few seconds."),
+      [70, 92, 84, 60, 88].map((w) => h("div", { class: "bar", style: `width:${w}%` }))));
+  }
+
+  /* ---------- library, trail, links ---------- */
+  function renderLibrary() {
+    const libEl = $("lib");
+    const cur = state.meta && state.meta.source === "curated" ? state.meta.id : null;
+    const sorted = LIB.lessons.slice().sort((a, b) => (b.langs.some((c) => state.langs.includes(c)) - a.langs.some((c) => state.langs.includes(c))));
+    libEl.classList.toggle("dim", state.langs.length > 0);
+    libEl.replaceChildren(...sorted.map((l) => h("button", { type: "button", class: (l.id === cur ? "current " : "") + (l.langs.some((c) => state.langs.includes(c)) ? "" : "off"), onclick: () => openCurated(l.id) },
+      h("span", { class: "t" }, l.title), h("span", { class: "m" }, l.langs.map(dot), l.level))));
+    if (!LIB.lessons.length) libEl.replaceChildren(h("p", { class: "empty" }, "No curated lessons in this build."));
+  }
+  const trailKey = (m) => (m.source === "curated" ? "c:" + m.id : `g:${m.langs.join(",")}:${norm(m.feature)}:${m.level}`);
+  function addTrail(meta, title) {
+    const key = trailKey(meta);
+    state.trail = state.trail.filter((t) => t.key !== key);
+    state.trail.push({ key, title: title.slice(0, 80), meta: { source: meta.source, id: meta.id, feature: meta.feature, langs: meta.langs, level: meta.level } });
+    state.trail = state.trail.slice(-12); store.set("tt-trail", state.trail); renderTrail();
+  }
+  function renderTrail() {
+    const el = $("trail");
+    if (!state.trail.length) { el.replaceChildren(h("p", { class: "empty" }, "Lessons you open appear here, so you can retrace your steps.")); return; }
+    const kids = [];
+    state.trail.forEach((t, i) => {
+      if (i) kids.push(h("span", { class: "sep", "aria-hidden": "true" }, "→"));
+      kids.push(h("button", { type: "button", onclick: () => reopen(t) }, t.title));
+    });
+    kids.push(h("button", { type: "button", style: "color:var(--muted)", onclick: () => { state.trail = []; store.set("tt-trail", []); renderTrail(); } }, "clear"));
+    el.replaceChildren(...kids);
+  }
+  // Lessons made by Claude are kept on this device (the last 15), so the trail can reopen them for free.
+  const SAVED = "tt-saved";
+  function rememberLesson(meta, lesson) {
+    const all = arr(store.get(SAVED, []), 15).filter((x) => x && x.key !== trailKey(meta));
+    all.push({ key: trailKey(meta), meta, lesson });
+    while (all.length > 15) all.shift();
+    store.set(SAVED, all);
+  }
+  function reopen(t) {
+    if (t.meta.source === "curated") return openCurated(t.meta.id, { fromTrail: true });
+    const saved = arr(store.get(SAVED, []), 15).find((x) => x && x.key === t.key);
+    if (saved) { state.langs = saved.meta.langs.slice(); featureInput.value = saved.meta.feature; saveStudio(); renderStudio(); showLesson(normLesson(saved.lesson, saved.meta.langs, saved.meta.feature), saved.meta, { fromTrail: true }); return; }
+    state.langs = t.meta.langs.slice(); state.level = t.meta.level || state.level; saveStudio(); renderStudio(); teach({ feature: t.meta.feature });
+  }
+
+  function setHash(meta) {
+    const p = new URLSearchParams();
+    if (meta.source === "curated") p.set("lesson", meta.id);
+    else { p.set("feature", meta.feature); p.set("langs", meta.langs.join(",")); p.set("level", meta.level); }
+    try { history.replaceState(null, "", "#" + p.toString()); } catch {}
+  }
+  function readHash() {
+    const p = new URLSearchParams(location.hash.slice(1));
+    if (p.get("lesson") && CURATED.has(p.get("lesson"))) { openCurated(p.get("lesson")); return true; }
+    const feature = p.get("feature"), langs = (p.get("langs") || "").split(",").map((s) => s.trim()).filter((c) => /^[a-z]{2,3}$/.test(c));
+    if (feature && langs.length) {
+      state.langs = langs.slice(0, 6); if (["beginner", "intermediate", "advanced"].includes(p.get("level"))) state.level = p.get("level");
+      featureInput.value = feature.slice(0, 120); saveStudio(); renderStudio();
+      if (findCurated(feature, state.langs) || ai.mode) { teach(); return true; }
+      setStatus("Press Teach me to make this lesson (needs a Claude connection).");
+    }
+    return false;
+  }
+
+  /* ---------- dialogs, theme ---------- */
+  const keyDlg = $("keyDlg");
+  keyBtn.addEventListener("click", () => { $("keyField").value = ai.key || ""; try { $("keyRemember").checked = !!localStorage.getItem("tt-key"); } catch {} keyDlg.showModal(); });
+  meterEl.addEventListener("click", () => { if (ai.mode === "hosted" || !ai.mode) keyBtn.click(); });
+  keyDlg.addEventListener("close", () => {
+    if (keyDlg.returnValue === "save") {
+      const k = $("keyField").value.trim();
+      if (k) { ai.key = k; saveKey(k, $("keyRemember").checked); keyBtn.classList.remove("nudge"); setStatus("Using your API key."); }
+    } else if (keyDlg.returnValue === "clear") { ai.key = null; saveKey(null); setStatus("Key forgotten."); }
+    applyMode(); if (state.lesson) renderLesson();
+  });
+  $("helpBtn").addEventListener("click", () => $("helpDlg").showModal());
+  const root = document.documentElement;
+  const savedTheme = store.get("tt-theme", "");
+  if (savedTheme) root.dataset.theme = savedTheme;
+  $("themeBtn").addEventListener("click", () => {
+    const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark"; store.set("tt-theme", root.dataset.theme);
+  });
+
+  /* ---------- start ---------- */
+  renderStudio(); renderTrail(); renderWelcome(); applyMode();
+  (async () => {
+    // Hosted on the Taal Teacher server? It answers /api/config. Otherwise look for Claude's own connection.
+    const cfg = await fetch("/api/config", { headers: { "x-teacher": "1" } }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+    if (cfg && cfg.mode === "hosted") { ai.hosted = cfg; ai.quota = cfg.quota; }
+    else {
+      try {
+        for (let i = 0; i < 30 && !window.claude; i++) await new Promise((r) => setTimeout(r, 100));
+        ai.sample = window.claude ? await window.claude.use("sample") : null;
+      } catch { ai.sample = null; }
+    }
+    ai.key = loadKey();
+    applyMode();
+    if (state.lesson) renderLesson(); else readHash();
+  })();
+})();
+</script>

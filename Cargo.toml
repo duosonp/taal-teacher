@@ -1,0 +1,26 @@
+[package]
+name = "taal-teacher"
+version = "0.1.0"
+edition = "2024"
+description = "Serves Taal Teacher, a grammar teacher for any language, with curated lessons and per-visitor daily Claude quotas"
+publish = false
+
+[[bin]]
+name = "taal-teacher"
+path = "src/main.rs"
+
+[dependencies]
+axum = "0.8"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal"] }
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+rusqlite = { version = "0.32", features = ["bundled"] }
+rand = "0.8"
+sha2 = "0.10"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[profile.release]
+lto = "thin"
+strip = true
