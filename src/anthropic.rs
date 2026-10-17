@@ -1,6 +1,6 @@
 //! Minimal client for the Anthropic Messages API.
 //!
-//! Answers come back through a forced tool call ("respond"), so the API hands over a parsed
+//! Answers come back through a tool call ("respond", requested via the system prompt), so the API hands over a parsed
 //! JSON object instead of free text: no code fences, no stray sentences, no broken quoting.
 //! An answer cut off by the length limit is asked for once more with twice the room.
 
@@ -80,7 +80,10 @@ impl Claude {
                 "description": "Give your answer: a JSON object exactly as the instructions describe.",
                 "input_schema": { "type": "object", "additionalProperties": true },
             }],
-            "tool_choice": { "type": "tool", "name": "respond" },
+            // Sonnet 5.5 and newer reject forced tool use ("tool"/"any"), so let Claude choose and
+            // ask for the tool in the system prompt; JSON written as text is still accepted below.
+            "tool_choice": { "type": "auto" },
+            "system": "Always answer by calling the respond tool exactly once, with the complete JSON object as its input.",
             "messages": [{ "role": "user", "content": prompt }],
         });
         let res = self

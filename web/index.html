@@ -513,7 +513,7 @@ footer a { color: inherit; }
             body: JSON.stringify({
               model: MODEL, max_tokens: room,
               tools: [{ name: "respond", description: "Give your answer: a JSON object exactly as the instructions describe.", input_schema: { type: "object", additionalProperties: true } }],
-              tool_choice: { type: "tool", name: "respond" },
+              tool_choice: { type: "auto" }, system: "Always answer by calling the respond tool exactly once, with the complete JSON object as its input.",
               messages: [{ role: "user", content: fill(kind, vars) }],
             }),
           });
