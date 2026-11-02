@@ -44,6 +44,7 @@ pub enum VarError {
 fn var_cap(name: &str) -> usize {
     match name {
         "lesson_ctx" => 3500,
+        "overviews" => 3000,
         "hist_block" => 3000,
         "avoid" => 1500,
         "focus_block" => 400,
@@ -51,6 +52,8 @@ fn var_cap(name: &str) -> usize {
         "sentence" => 400,
         "langs" => 300,
         "feature" => 120,
+        "lesson_title" => 200,
+        "lang" => 100,
         _ => 60,
     }
 }
@@ -163,15 +166,31 @@ mod tests {
     #[test]
     fn reads_the_real_page() {
         let p = Prompts::from_page(include_str!("../web/index.html")).unwrap();
-        assert_eq!(p.kinds(), ["ask", "check", "drill", "lesson", "suggest"]);
-        assert!(p.get("lesson").unwrap().shared && p.get("suggest").unwrap().shared);
+        assert_eq!(
+            p.kinds(),
+            ["ask", "check", "drill", "lesson_compare", "lesson_drill", "lesson_outline", "lesson_section", "suggest"]
+        );
+        for kind in ["lesson_outline", "lesson_section", "lesson_compare", "lesson_drill", "suggest"] {
+            assert!(p.get(kind).unwrap().shared, "{kind} should be shared");
+        }
         assert!(!p.get("ask").unwrap().shared && !p.get("drill").unwrap().shared);
+        // Each step of a lesson is small enough not to be cut off.
+        for kind in ["lesson_outline", "lesson_section", "lesson_compare", "lesson_drill"] {
+            assert!(p.get(kind).unwrap().max_tokens <= 3000, "{kind} asks for too much at once");
+        }
         let out = p
-            .get("lesson")
+            .get("lesson_section")
             .unwrap()
-            .fill(&vars(&[("langs", "Romanian (ro)"), ("feature", "demonstratives"), ("level", "beginner"), ("base", "English")]))
+            .fill(&vars(&[
+                ("langs", "Romanian (ro), Italian (it)"),
+                ("lang", "Romanian (ro)"),
+                ("lesson_title", "This and that"),
+                ("feature", "demonstratives"),
+                ("level", "beginner"),
+                ("base", "English"),
+            ]))
             .unwrap();
-        assert!(out.contains("demonstratives") && out.contains("Romanian (ro)"));
+        assert!(out.contains("demonstratives") && out.contains("only the part for Romanian (ro)"));
         assert!(!out.contains("{{"));
     }
 

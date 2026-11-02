@@ -2,7 +2,9 @@
 //!
 //! Answers come back through a tool call ("respond", requested via the system prompt), so the API hands over a parsed
 //! JSON object instead of free text: no code fences, no stray sentences, no broken quoting.
-//! An answer cut off by the length limit is asked for once more with twice the room.
+//! An answer cut off by the length limit is asked for once more with twice the room; a complete
+//! but garbled answer is asked for once more as it was. Lessons are built from several small
+//! requests (see the `lesson_*` prompts), so answers rarely come near the limit.
 
 use std::time::Duration;
 
@@ -61,12 +63,10 @@ impl Claude {
                 }
                 _ => {}
             }
-            if !reply.cut_off || room >= MAX_TOKENS_CEILING || attempt == 1 {
-                tracing::warn!(stop = reply.stop_reason, start = reply.snippet, room, "answer was not usable JSON");
-                break;
+            tracing::warn!(stop = reply.stop_reason, start = reply.snippet, room, attempt, "answer was not usable JSON");
+            if reply.cut_off {
+                room = (room * 2).min(MAX_TOKENS_CEILING);
             }
-            tracing::info!(room, "answer was cut off; asking again with more room");
-            room = (room * 2).min(MAX_TOKENS_CEILING);
         }
         Err(CallError::InvalidJson { input_tokens, output_tokens })
     }

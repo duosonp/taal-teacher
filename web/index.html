@@ -301,25 +301,67 @@ footer a { color: inherit; }
 <script type="application/json" id="lessons">__LESSONS__</script>
 <script type="application/json" id="teacher-prompts">
 {
- "lesson": {
-  "maxTokens": 6000,
+ "lesson_outline": {
+  "maxTokens": 1200,
   "shared": true,
   "text": [
-   "You are an expert linguist and an inspiring language teacher. Teach the grammatical feature \"{{feature}}\" in: {{langs}}. Level: {{level}}.",
-   "Write every explanation, label, gloss meaning and translation in {{base}}. Write example sentences and forms in the language being taught.",
+   "You are an expert linguist and an inspiring language teacher, planning a lesson on the grammatical feature \"{{feature}}\" in: {{langs}}. Level: {{level}}.",
+   "Write in {{base}}.",
    "{{focus_block}}",
-   "Return ONLY a JSON object of this shape:",
-   "{\"title\":\"...\",\"summary\":\"...\",\"matrix\":{\"title\":\"...\",\"cols\":[\"...\"],\"rows\":[{\"label\":\"...\",\"cells\":[\"...\"]}]},\"sections\":[{\"lang\":\"code\",\"name\":\"English name\",\"overview\":\"...\",\"tables\":[{\"title\":\"...\",\"cols\":[\"...\"],\"rows\":[{\"label\":\"...\",\"cells\":[\"...\"]}]}],\"examples\":[{\"words\":[{\"w\":\"word\",\"g\":\"gloss\"}],\"translation\":\"...\",\"note\":\"...\"}],\"pitfalls\":[\"...\"]}],\"contrasts\":[{\"point\":\"...\",\"detail\":\"...\"}],\"mnemonic\":\"...\",\"related\":[{\"feature\":\"...\",\"langs\":[\"code\"],\"why\":\"...\"}],\"drill\":[{\"q\":\"...\",\"lang\":\"code\",\"options\":[\"...\"],\"answer\":\"...\",\"accept\":[\"...\"],\"explain\":\"...\"}]}",
+   "This is step 1 of several: the part for each language is written later. Now give only the frame of the lesson.",
+   "Return ONLY a JSON object: {\"title\":\"...\",\"summary\":\"...\",\"mnemonic\":\"...\",\"related\":[{\"feature\":\"...\",\"langs\":[\"code\"],\"why\":\"...\"}]}",
+   "- title: short and specific. summary: 2 or 3 sentences giving the big picture, across all the languages when there are several.",
+   "- mnemonic: one memorable line, or \"\".",
+   "- related: 3 to 5 neighbouring features worth learning next, with the language codes (as given) they apply to. why: under 14 words.",
+   "- Accuracy comes first: only say what you are certain of.",
+   "- Valid JSON only: write quotation marks inside text as typographic quotes (“ ” „ « ») or escape them as \\\", no comments, no trailing commas, nothing after the closing brace."
+  ]
+ },
+ "lesson_section": {
+  "maxTokens": 3000,
+  "shared": true,
+  "text": [
+   "You are an expert linguist and an inspiring language teacher, writing the lesson \"{{lesson_title}}\" on the grammatical feature \"{{feature}}\". The lesson covers: {{langs}}. Level: {{level}}.",
+   "Now write only the part for {{lang}}.",
+   "Write every explanation, label, gloss meaning and translation in {{base}}. Write example sentences and forms in {{lang}}.",
+   "{{focus_block}}",
+   "Return ONLY a JSON object: {\"overview\":\"...\",\"tables\":[{\"title\":\"...\",\"cols\":[\"...\"],\"rows\":[{\"label\":\"...\",\"cells\":[\"...\"]}]}],\"examples\":[{\"words\":[{\"w\":\"word\",\"g\":\"gloss\"}],\"translation\":\"...\",\"note\":\"...\"}],\"pitfalls\":[\"...\"]}",
    "",
    "Rules:",
-   "- Accuracy comes first. Only give forms, rules and examples you are certain of. If the feature does not exist in a language or works very differently there, say so in that section's overview and show how the same meaning is expressed instead.",
-   "- title: short and specific. summary: 2 or 3 sentences giving the big picture.",
-   "- sections: one per language, in the order given, with lang exactly the code given. overview: 2 to 4 sentences on how the feature works. tables: 1 to 3 paradigm tables of real forms; every row has exactly one cell per column, \"\" for a gap. examples: 3 to 5 natural sentences, simple first. words splits the sentence into words (punctuation stays on its word); g is a Leipzig-style interlinear gloss: the meaning in {{base}} plus grammatical labels in capitals (DEF, PL, ACC, GEN, 3SG, PST…) joined with . or -. note: under 20 words, or \"\". pitfalls: 2 or 3 typical learner mistakes.",
-   "- With more than one language: matrix compares them in 4 to 6 rows (for example forms, position, agreement, when it is obligatory, special uses), one column per language in the order given, cols are the language names; contrasts: 2 to 4 sharp observations across the languages. With one language: no matrix, and contrasts is [].",
-   "- mnemonic: one memorable line, or \"\".",
-   "- related: 3 to 5 neighbouring features worth learning next, with the language codes they apply to.",
-   "- drill: 4 to 6 practice items, easy first, spread over the languages. q is a short task, usually a gap ___ to fill or a choice, with the needed hint in brackets. options: 3 or 4 choices including the answer, or [] for a typed answer. accept: other correct answers for a typed answer. explain: one sentence.",
+   "- Accuracy comes first. Only give forms, rules and examples you are certain of. If the feature does not exist in {{lang}} or works very differently there, say so in the overview and show how the same meaning is expressed instead.",
+   "- overview: 2 to 4 sentences on how the feature works in {{lang}}.",
+   "- tables: 1 to 3 paradigm tables of real forms; every row has exactly one cell per column, \"\" for a gap.",
+   "- examples: 3 to 5 natural sentences, simple first. words splits the sentence into words (punctuation stays on its word); g is a Leipzig-style interlinear gloss: the meaning in {{base}} plus grammatical labels in capitals (DEF, PL, ACC, GEN, 3SG, PST…) joined with . or -. note: under 20 words, or \"\".",
+   "- pitfalls: 2 or 3 typical learner mistakes.",
    "- Level {{level}}: beginner means core forms and everyday sentences; intermediate adds irregular forms and finer rules; advanced may cover register, exceptions, dialects and history.",
+   "- Valid JSON only: write quotation marks inside text as typographic quotes (“ ” „ « ») or escape them as \\\", no comments, no trailing commas, nothing after the closing brace."
+  ]
+ },
+ "lesson_compare": {
+  "maxTokens": 1800,
+  "shared": true,
+  "text": [
+   "You are an expert linguist. A {{level}} lesson on the grammatical feature \"{{feature}}\" covers: {{langs}}. This is what it already says about each language:",
+   "\"\"\"",
+   "{{overviews}}",
+   "\"\"\"",
+   "Now compare the languages. Write in {{base}}; forms in the languages themselves.",
+   "Return ONLY a JSON object: {\"matrix\":{\"title\":\"...\",\"cols\":[\"...\"],\"rows\":[{\"label\":\"...\",\"cells\":[\"...\"]}]},\"contrasts\":[{\"point\":\"...\",\"detail\":\"...\"}]}",
+   "- matrix: 4 to 6 rows (for example forms, position, agreement, when it is obligatory, special uses); one column per language in the order given, and cols are the language names; every row has exactly one cell per column; cells under 12 words.",
+   "- contrasts: 2 to 4 sharp observations across the languages. point: under 10 words. detail: 1 or 2 sentences.",
+   "- Accuracy comes first: only say what you are certain of, and stay consistent with the text above.",
+   "- Valid JSON only: write quotation marks inside text as typographic quotes (“ ” „ « ») or escape them as \\\", no comments, no trailing commas, nothing after the closing brace."
+  ]
+ },
+ "lesson_drill": {
+  "maxTokens": 2000,
+  "shared": true,
+  "text": [
+   "Write 5 practice exercises for a {{level}} lesson on \"{{feature}}\" in {{langs}}. Explanations in {{base}}.",
+   "{{focus_block}}",
+   "Return ONLY a JSON object: {\"items\":[{\"q\":\"...\",\"lang\":\"code\",\"options\":[\"...\"],\"answer\":\"...\",\"accept\":[\"...\"],\"explain\":\"...\"}]}",
+   "- q is a short task, usually a gap ___ to fill or a choice, with the needed hint in brackets. Mix multiple choice (3 or 4 options including the answer) and typed answers (options []). accept: other correct answers. explain: one sentence. Easy first.",
+   "- Spread the items over the languages, with lang exactly one of the given codes. Only use forms you are certain of.",
    "- Valid JSON only: write quotation marks inside text as typographic quotes (“ ” „ « ») or escape them as \\\", no comments, no trailing commas, nothing after the closing brace."
   ]
  },
@@ -527,8 +569,8 @@ footer a { color: inherit; }
         const data = tool ? tool.input : salvageJson(parts.filter((c) => c.type === "text").map((c) => c.text).join(""));
         const cutOff = j && j.stop_reason === "max_tokens";
         if (data && (!cutOff || attempt === 1)) return data;
-        if (!cutOff) break;
-        room = Math.min(room * 2, 8000);
+        // Cut off: ask again with more room. Garbled but complete: simply ask once more.
+        if (cutOff) room = Math.min(room * 2, 8000);
       }
       throw { code: "invalid_json" };
     }
@@ -666,12 +708,103 @@ footer a { color: inherit; }
     if (curated) { openCurated(curated.id); return; }
     if (!ai.mode) { handleError({ code: "not_connected" }); return; }
     const vars = { langs: langsVar(langs), feature: feature.slice(0, 120), level: state.level, base: state.base, focus_block: focusBlock() };
+    const meta = { source: "claude", feature, langs, level: state.level, base: state.base, focus: focusInput.value.trim() };
     showLoading(feature, langs);
-    const data = await run(langs.length > 1 ? "The teacher is preparing the comparison…" : "The teacher is preparing the lesson…", (signal) => aiJson("lesson", vars, { signal }));
-    if (!data) { if (!state.lesson) renderWelcome(); else renderLesson(); return; }
-    const lesson = normLesson(data, langs, feature);
-    if (!lesson.sections.length) { setStatus("That answer had no lesson in it. Try again.", "err"); if (state.lesson) renderLesson(); else renderWelcome(); return; }
-    showLesson(lesson, { source: "claude", feature, langs, level: state.level, base: state.base, focus: focusInput.value.trim() });
+    await run(langs.length > 1 ? "Step 1: planning the comparison…" : "Step 1: planning the lesson…", (signal) => buildLesson(vars, meta, signal));
+  }
+
+  // A lesson is made in small steps, so no single answer is long enough to be cut off:
+  // 1. the frame (title, summary, mnemonic, related), 2. one call per language,
+  // 3. the comparison across languages, built from step 2, 4. the exercises.
+  // The lesson is shown after step 1 and fills in as each answer arrives.
+  async function buildLesson(vars, meta, signal) {
+    const { langs, feature } = meta;
+    const outline = await aiJson("lesson_outline", vars, { signal });
+    const raw = { ...(outline && typeof outline === "object" ? outline : {}), sections: [], matrix: null, contrasts: [], drill: [] };
+    const parts = new Map(langs.map((c) => [c, "pending"]));
+    const shown = () => state.meta === meta;
+    const current = () => shown() && !signal.aborted;
+    const refresh = () => {
+      if (!shown()) return;
+      const l = normLesson(raw, langs, feature);
+      l.sections = langs.map((c) => l.sections.find((s) => s.lang === c) || { lang: c, name: langName(c), overview: "", tables: [], examples: [], pitfalls: [], state: parts.get(c) });
+      l.drill = state.lesson.drill; l.building = [...parts.values()].includes("pending") || raw.building;
+      state.lesson = l; renderLesson();
+    };
+    raw.building = true;
+    showLesson(Object.assign(normLesson(raw, langs, feature), { sections: [], drill: [] }), meta, { partial: true });
+    refresh();
+    try { await fillLesson(); } finally {
+      // Stopped or failed half-way: parts still pending get a Try again button.
+      for (const [c, v] of parts) if (v === "pending") parts.set(c, "failed");
+      raw.building = false; refresh();
+    }
+
+    async function fillLesson() {
+    const title = str(raw.title, 160) || feature;
+
+    const section = async (c) => {
+      try {
+        const d = await aiJson("lesson_section", { ...vars, lang: `${langName(c)} (${c})`, lesson_title: title.slice(0, 200) }, { signal });
+        raw.sections = raw.sections.filter((s) => s.lang !== c).concat({ ...(d && typeof d === "object" ? d : {}), lang: c });
+        parts.set(c, "done");
+      } catch (e) {
+        if (signal.aborted || (e && e.code === "cancelled")) throw e;
+        parts.set(c, "failed");
+        if (["quota", "global_quota", "bad_key", "rate_limited"].includes(e && e.code)) throw e;
+      }
+      refresh();
+    };
+    setStatus(`Step 2: writing about ${langs.map(langName).join(", ")}…`);
+    // Two languages at a time: quick, and gentle on rate limits.
+    const queue = langs.slice();
+    await Promise.all([0, 1].map(async () => { while (queue.length) await section(queue.shift()); }));
+
+    const sections = normLesson(raw, langs, feature).sections;
+    if (langs.length > 1 && sections.length > 1 && current()) {
+      setStatus("Step 3: comparing the languages…");
+      const overviews = sections.map((s) => {
+        const t = s.tables[0];
+        const forms = t ? " Forms: " + t.rows.slice(0, 6).map((r) => `${r.label} ${r.cells.filter(Boolean).join("/")}`).join("; ") : "";
+        return `${s.name} (${s.lang}): ${s.overview}${forms}`.slice(0, Math.floor(2800 / sections.length));
+      }).join("\n");
+      try {
+        const d = await aiJson("lesson_compare", { langs: langsVar(sections.map((s) => s.lang)), feature: vars.feature, level: vars.level, base: vars.base, overviews }, { signal });
+        if (d && typeof d === "object") { raw.matrix = d.matrix; raw.contrasts = d.contrasts; }
+      } catch (e) { if (signal.aborted || (e && e.code === "cancelled")) throw e; }
+      refresh();
+    }
+
+    if (current()) {
+      setStatus("Step 4: writing exercises…");
+      try {
+        const d = await aiJson("lesson_drill", vars, { signal });
+        const items = arr(d && d.items, 8).map((x) => normDrill(x, langs)).filter(Boolean);
+        raw.drill = items;
+        if (current()) { state.drill.push(...items); state.drillSeen.push(...items.map((x) => x.q)); state.lesson.drill = state.drill.slice(); }
+      } catch (e) { if (signal.aborted || (e && e.code === "cancelled")) throw e; }
+    }
+    raw.building = false;
+    refresh();
+    if (!current()) return;
+    const missed = langs.filter((c) => parts.get(c) === "failed");
+    if (!sections.length) { setStatus("No part of the lesson could be prepared. Try again.", "err"); return; }
+    rememberLesson(meta, normLesson(raw, langs, feature));
+    if (missed.length) setStatus(`The part for ${missed.map(langName).join(", ")} couldn't be prepared. Press Try again on it.`, "err");
+    }
+  }
+
+  async function retrySection(c) {
+    const l = state.lesson, meta = state.meta;
+    if (!l || !meta || meta.source !== "claude") return;
+    const vars = { langs: langsVar(l.langs), feature: l.feature.slice(0, 120), level: meta.level, base: meta.base || state.base, focus_block: meta.focus ? `- The learner especially wants: ${meta.focus.slice(0, 300)}\n` : "", lang: `${langName(c)} (${c})`, lesson_title: l.title.slice(0, 200) };
+    l.sections = l.sections.map((s) => (s.lang === c ? { ...s, state: "pending" } : s)); renderLesson();
+    const d = await run(`Writing about ${langName(c)}…`, (signal) => aiJson("lesson_section", vars, { signal }));
+    if (state.lesson !== l) return;
+    const fresh = d && normLesson({ sections: [{ ...d, lang: c }] }, [c], l.feature).sections[0];
+    l.sections = l.sections.map((s) => (s.lang === c ? fresh || { ...s, state: "failed" } : s));
+    renderLesson();
+    if (fresh) rememberLesson(meta, l);
   }
   $("teachBtn").addEventListener("click", () => teach());
 
@@ -736,13 +869,13 @@ footer a { color: inherit; }
     const lesson = normLesson(l, l.langs, l.feature);
     showLesson(lesson, { source: "curated", id, feature: l.feature, langs: l.langs, level: l.level }, { fromTrail });
   }
-  function showLesson(lesson, meta, { fromTrail } = {}) {
+  function showLesson(lesson, meta, { fromTrail, partial } = {}) {
     state.lesson = lesson; state.meta = meta; state.tab = 0; state.chat = []; state.drillSeen = lesson.drill.map((d) => d.q);
     state.drill = lesson.drill.slice(); state.answers = new Map(); state.picked = new Map(); state.typed = new Map();
     state.checkResult = null; state.checkDraft = "";
     if (!fromTrail) addTrail(meta, lesson.title);
     setHash(meta);
-    if (meta.source === "claude") rememberLesson(meta, lesson);
+    if (meta.source === "claude" && !partial) rememberLesson(meta, lesson);
     renderLesson(); renderLibrary();
     sheet.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
   }
@@ -789,6 +922,9 @@ footer a { color: inherit; }
   }
 
   function sectionNode(s) {
+    if (s.state === "pending") return h("section", { class: "loading" }, h("h3", {}, dot(s.lang), s.name), h("p", { class: "empty" }, "Being written…"), [80, 64, 90, 72].map((w) => h("div", { class: "bar", style: `width:${w}%` })));
+    if (s.state === "failed") return h("section", {}, h("h3", {}, dot(s.lang), s.name), h("p", { class: "empty" }, "This part couldn't be prepared."),
+      h("button", { class: "ghost", type: "button", disabled: !ai.mode, onclick: () => retrySection(s.lang) }, "Try again"));
     return h("section", {},
       h("h3", {}, dot(s.lang), s.name),
       s.overview ? h("p", { class: "overview" }, s.overview) : null,
@@ -809,6 +945,7 @@ footer a { color: inherit; }
       h("h2", { class: "title" }, l.title),
       l.summary ? h("p", { class: "summary" }, l.summary) : null,
       l.matrix ? [h("h4", {}, "Side by side"), tableNode(l.matrix, { matrix: true })] : null,
+      l.building && multi && !l.matrix ? [h("h4", {}, "Side by side"), h("p", { class: "empty" }, "The comparison follows once each language is written.")] : null,
       l.contrasts.length ? [h("h4", {}, "What to notice"), h("div", { class: "contrasts" }, l.contrasts.map((c) => h("div", { class: "contrast" }, h("b", {}, c.point), h("span", {}, c.detail))))] : null,
       multi ? h("div", { class: "tabs", role: "tablist" }, l.sections.map((s, i) => h("button", { type: "button", role: "tab", "aria-selected": String(i === sel), onclick: () => { state.tab = i; renderLesson(); } }, dot(s.lang), s.name))) : null,
       multi ? sectionNode(l.sections[sel]) : l.sections.map(sectionNode),
@@ -842,7 +979,7 @@ footer a { color: inherit; }
     }));
     return h("section", { class: "panel" },
       h("h3", {}, "Practice"),
-      items.length ? h("div", { class: "score" }, `${right} of ${done.length} right · ${items.length - done.length} to go`) : h("p", { class: "empty" }, "No exercises yet."),
+      items.length ? h("div", { class: "score" }, `${right} of ${done.length} right · ${items.length - done.length} to go`) : h("p", { class: "empty" }, state.lesson && state.lesson.building ? "Exercises are being written…" : "No exercises yet."),
       list,
       h("div", { class: "row", style: "margin-top:10px" }, h("button", { class: "ghost", type: "button", disabled: !ai.mode, title: ai.mode ? null : "Needs a Claude connection", onclick: moreDrill }, "More exercises")));
   }

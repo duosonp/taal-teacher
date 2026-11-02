@@ -34,9 +34,14 @@ The page picks the first that is available:
    never reaches this server.
 3. **This server** (`/api/ask`): a free daily allowance, paid by your API key.
 
-The server only sends the five templates in the page (`lesson`, `suggest`, `drill`, `check`, `ask`)
-with capped values, so it can't be used as a general Claude proxy. `lesson` and `suggest` answers
-are cached and shared: a lesson someone already asked for costs nothing the second time.
+The server only sends the templates in the page with capped values, so it can't be used as a
+general Claude proxy. A new lesson is made in small steps, so no single answer is long enough to be
+cut off: `lesson_outline` (title, summary, mnemonic, related), then `lesson_section` once per
+language, then `lesson_compare` (the side-by-side table, only with several languages, built from
+the sections), then `lesson_drill`. The page shows the lesson after the first step and fills it in
+as answers arrive; a language whose part fails gets a Try again button. `suggest`, `drill`,
+`check` and `ask` are single requests. The `lesson_*` and `suggest` answers are cached and shared:
+a lesson someone already asked for costs nothing the second time.
 
 The curated library needs no Claude at all. Typing a feature and languages that match a library
 lesson opens the library lesson instead of asking Claude.

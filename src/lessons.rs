@@ -1,7 +1,7 @@
 //! Curated lessons: the canonical, hand-checked part of Taal Teacher.
 //!
-//! `data/lessons.json` holds lessons in exactly the shape Claude returns for the `lesson`
-//! prompt, plus an id, the date added, practice items and links to other lessons (the
+//! `data/lessons.json` holds lessons in exactly the shape the page assembles from Claude's
+//! `lesson_*` prompts, plus an id, the date added, practice items and links to other lessons (the
 //! word-trail idea, applied to grammar features). They are embedded in the page at build
 //! time, so the library works with no Claude connection at all. `validate` refuses a deploy
 //! with broken data, the same way word-trail's tool guards its graph.
